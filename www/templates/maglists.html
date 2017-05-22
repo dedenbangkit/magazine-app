@@ -1,0 +1,11 @@
+<ion-view view-title="All Issues">
+  <ion-content>
+    <div ng-repeat="maglist in maglists" class="list-magazine">
+    <a class="item item-thumbnail-left" href="contents/1495058338-30/index.html">
+      <img src="{{maglist.imgUrl}}">
+      <h2>{{maglist.title}}</h2>
+      <p>{{maglist.author}}</p>
+    </a>
+  </div>
+  </ion-content>
+</ion-view>

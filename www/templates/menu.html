@@ -1,0 +1,52 @@
+<ion-side-menus enable-menu-with-back-views="false">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-stable">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+
+  <ion-side-menu side="left">
+    <ion-content>
+      <ion-list>
+        <ion-item class="heading-item item item-avatar" nav-clear menu-close ui-sref="app.profile">
+          <div class="user-image-container profile">
+            <pre-img ratio="_1_1" helper-class="rounded-image">
+              <img class="user-image" ng-src="res/icons/android/icon-72-hdpi.png" spinner-on-load>
+          	</pre-img>
+          </div>
+        </ion-item>
+      </ion-list>
+      <div class="menus">
+      <ion-list>
+        <ion-item menu-close href="#/app/browse">
+         Dashboard
+        </ion-item>
+        <ion-item menu-close href="#/app/maglists">
+          Magazine
+        </ion-item>
+        <ion-item menu-close href="#/app/settings">
+          Settings
+        </ion-item>
+        <ion-item menu-close href="#/app/about">
+          About {{company.company_name}}
+        </ion-item>
+      </ion-list>
+      </div>
+    </ion-content>
+
+    <div class="bar bar-footer bar-dark">
+      <div class="row">
+      <div class="col col-33 social"><i class="icon ion-social-facebook"></i></div>
+      <div class="col col-33 social"><i class="icon ion-social-twitter"></i></div>
+      <div class="col col-33 social"><i class="icon ion-social-instagram"></i></div>
+    </div>
+    </div>
+  </ion-side-menu>
+</ion-side-menus>

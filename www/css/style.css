@@ -1,0 +1,95 @@
+/* Empty. Add your own CSS if you like */
+
+
+.bar.bar-stable {
+    background-color: #2c539e;
+    color: #FEFEFE;
+}
+.bar.bar-stable .title {
+    background-color: #2c539e;
+    color: #FEFEFE;
+}
+
+.bar-stable .button.button-icon, .bar-stable .button.button-clear{
+  color:#FFF;
+}
+
+.list-magazine{
+  position: relative;
+  padding-top: 0px;
+  padding-bottom: 1px;
+  padding-left: 0;
+  margin-bottom: 0px;
+}
+
+.item-thumbnail-left > img:first-child,
+.item-thumbnail-left .item-image,
+.item-thumbnail-left .item-content > img:first-child {
+  height: auto;
+  max-height: none;
+}
+.item-thumbnail-left, .item-thumbnail-left .item-content{
+  height:auto;
+  max-height: none;
+  min-height: 140px;
+}
+
+.item{
+  background: transparent;
+}
+
+.menu .item-complex .item-content, .item-radio .item-content{
+ padding: 16px 16px 16px 16px;
+}
+
+.item-avatar, .menu{
+  background-image: url('../img/bg-menu.jpg');
+}
+
+.menu{
+  background:linear-gradient(to bottom, rgb(44,83,158) 0%,rgb(44,83,158) 100%);
+}
+
+.menu ion-item{
+  border-color: transparent;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.menu .menus{
+  margin-top: 50px;
+}
+
+.menu .item-content{
+  background: transparent;
+  color:#FEFEFE;
+  text-align: center;
+}
+
+
+.menu .bar.bar-footer{
+  padding-bottom:10px;
+}
+
+.menu .social{
+  text-align: center;
+  font-size: 20px;
+}
+
+.item-avatar a.item-content{
+  background: transparent;
+}
+
+.item-avatar img{
+  border-radius: 50%;
+  max-width: 100px;
+  margin: 40px 20px;
+  border: #fff solid 5px;
+  box-shadow: 2px 3px 10px #888888;
+}
+
+
+/*CSS for Template*/
+.page{
+  width:100%;
+}
