@@ -65,7 +65,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('MaglistCtrl', function($scope, $http, $stateParams) {
+.controller('MaglistCtrl', function($scope, $http, $stateParams, $ionicSlideBoxDelegate) {
   $scope.details = [];
   $scope.title = $stateParams.title;
   $http.get('http://api-dev.publixx.id/issue/1/magazine/'+ $stateParams.id)
@@ -80,4 +80,11 @@ angular.module('starter.controllers', [])
     .then(function(result){
       things = result.data;
     });
+
+    $scope.options = {
+              noSwiping: true,
+              noSwipingClass: 'do_not_swipe',
+              pagination: false,
+              }
+
 });

@@ -87,4 +87,5 @@
     <plugin name="cordova-plugin-zip" spec="https://github.com/MobileChromeApps/zip.git" />
     <plugin name="cordova-plugin-file" spec="^4.3.3" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.6.3" />
+    <plugin name="com-sarriaroman-photoviewer" spec="^1.1.10" />
 </widget>

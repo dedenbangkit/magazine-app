@@ -3,6 +3,7 @@
     "version": "1.1.1",
     "description": "publixx: An Ionic project",
     "dependencies": {
+        "com-sarriaroman-photoviewer": "^1.1.10",
         "cordova-plugin-compat": "^1.1.0",
         "cordova-plugin-file": "^4.3.3",
         "cordova-plugin-file-transfer": "^1.6.3",
@@ -41,7 +42,8 @@
             "com.jjdltc.cordova.plugin.zip": {},
             "cordova-plugin-zip": {},
             "cordova-plugin-file": {},
-            "cordova-plugin-file-transfer": {}
+            "cordova-plugin-file-transfer": {},
+            "com-sarriaroman-photoviewer": {}
         }
     }
 }
