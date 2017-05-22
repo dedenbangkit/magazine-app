@@ -13,7 +13,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
   $cordovaBatteryStatus,
   $cordovaLocalNotification,
   $cordovaPush,
-  $cordovaFileTransfer) {
+  $cordovaFileTransfer,
+  $timeout) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -29,15 +30,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       StatusBar.styleDefault();
     }
 
-    $cordovaFile.createDir(cordova.file.dataDirectory, "content", false)
-      .then(function (success) {
-        alert('magazine folder created');
-      }, function (error) {
-        alert('folder created');
-      });
-
-    //File Transfer
-
+    // // create Directory
+    //
+    // $cordovaFile.createDir(cordova.file.dataDirectory, "content", false)
+    //   .then(function (success) {
+    //     alert('magazine folder created');
+    //   }, function (error) {
+    //     alert('folder created');
+    //   });
+    //
+    // // File Transfer
+    //
     // var url = "http://cdn.wall-pix.net/albums/art-space/00030109.jpg";
     // var targetPath = cordova.file.dataDirectory + "/content/testImage.png";
     // var trustHosts = true;

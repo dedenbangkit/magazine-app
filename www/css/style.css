@@ -69,6 +69,7 @@
 
 .menu .bar.bar-footer{
   padding-bottom:10px;
+  z-index: 1;
 }
 
 .menu .social{
@@ -92,4 +93,19 @@
 /*CSS for Template*/
 .page{
   width:100%;
+}
+
+.swiper-slide{
+  height: auto;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
 }
