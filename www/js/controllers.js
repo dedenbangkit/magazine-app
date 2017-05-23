@@ -48,7 +48,7 @@ angular.module('starter.controllers', [])
   $scope.apps = "";
 })
 
-.controller('MaglistsCtrl', function($scope, $http) {
+.controller('MaglistsCtrl', function($scope, $http, $cordovaProgress) {
   $scope.maglists = [];
   $http.get('http://api-dev.publixx.id/findstrict/MagzApis/2/HA10047493/3')
     .success(function(data, status, headers,config){
@@ -62,10 +62,14 @@ angular.module('starter.controllers', [])
     .then(function(result){
       things = result.data;
     });
+  $scope.loadContent = function(){
+    $cordovaProgress.showDeterminate(false, 100000);
+
+  }
 
 })
 
-.controller('MaglistCtrl', function($scope, $http, $stateParams, $ionicSlideBoxDelegate) {
+.controller('MaglistCtrl', function($scope, $http, $stateParams, $ionicSideMenuDelegate, $ionicScrollDelegate, $timeout) {
   $scope.details = [];
   $scope.title = $stateParams.title;
   $http.get('http://api-dev.publixx.id/issue/1/magazine/'+ $stateParams.id)
@@ -84,7 +88,10 @@ angular.module('starter.controllers', [])
     $scope.options = {
               noSwiping: true,
               noSwipingClass: 'do_not_swipe',
-              pagination: false,
-              }
+              watchSlidesVisibility:true,
+              pagination:false,
+    };
+
+    $ionicSideMenuDelegate.canDragContent(false)
 
 });

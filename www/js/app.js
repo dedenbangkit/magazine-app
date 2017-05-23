@@ -14,6 +14,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
   $cordovaLocalNotification,
   $cordovaPush,
   $cordovaFileTransfer,
+  $cordovaProgress,
   $timeout) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

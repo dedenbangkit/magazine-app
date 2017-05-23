@@ -7,6 +7,7 @@
         "cordova-plugin-compat": "^1.1.0",
         "cordova-plugin-file": "^4.3.3",
         "cordova-plugin-file-transfer": "^1.6.3",
+        "cordova-plugin-progressindicator": "git+https://github.com/pbernasconi/cordova-progressIndicator.git",
         "cordova-plugin-zip": "git+https://github.com/MobileChromeApps/zip.git",
         "cordova-zip-plugin": "0.0.4",
         "gulp": "^3.5.6",
@@ -43,7 +44,8 @@
             "cordova-plugin-zip": {},
             "cordova-plugin-file": {},
             "cordova-plugin-file-transfer": {},
-            "com-sarriaroman-photoviewer": {}
+            "com-sarriaroman-photoviewer": {},
+            "org.pbernasconi.progressindicator": {}
         }
     }
 }
