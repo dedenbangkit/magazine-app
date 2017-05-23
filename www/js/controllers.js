@@ -69,7 +69,14 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('MaglistCtrl', function($scope, $http, $stateParams, $ionicSideMenuDelegate, $ionicScrollDelegate, $timeout, $ionicModal) {
+.controller('MaglistCtrl', function(
+  $scope,
+  $http,
+  $stateParams,
+  $ionicSideMenuDelegate,
+  $ionicScrollDelegate,
+  $timeout,
+  $ionicModal,) {
   $scope.details = [];
   $scope.title = $stateParams.title;
   $http.get('http://api-dev.publixx.id/issue/1/magazine/'+ $stateParams.id)

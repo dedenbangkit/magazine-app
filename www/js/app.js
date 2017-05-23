@@ -61,7 +61,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
   });
 
 })
-.config(function($stateProvider, $urlRouterProvider) {
+
+.config(function($stateProvider, $urlRouterProvider, $sceDelegateProvider) {
+
   $stateProvider
 
     .state('app', {
@@ -127,6 +129,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       }
     }
   });
+
+
+  $sceDelegateProvider.resourceUrlWhitelist(['self', new RegExp('^(http[s]?):\/\/(w{3}.)?youtube\.com/.+$')]);
+  $sceDelegateProvider.resourceUrlWhitelist(['self', new RegExp('^(http[s]?):\/\/(w{3}.)?vidio\.com/.+$')]);
 
 
   // if none of the above states are matched, use this as the fallback
