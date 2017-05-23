@@ -18,8 +18,8 @@
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/nifty.modal.css" rel="stylesheet">
     <link href="css/swiper.css" rel="stylesheet">
-
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
@@ -39,5 +39,19 @@
 
   <body ng-app="starter">
     <ion-nav-view></ion-nav-view>
+
+    <script id="templates/modal.html" type="text/ng-template">
+          <ion-modal-view class="ion-nifty-modal">
+            <ion-header-bar class="bar bar-header bar-stable">
+              <h1 class="title">Details</h1>
+              <button class="button button-clear button-icon icon ion-close-circled" ng-click="modal.hide()"></button>
+            </ion-header-bar>
+            <ion-content class="padding" scroll="false" style="background-color:#fff">
+              <ion-scroll zooming="true" direction="xy" delegate-handle="zoom-pane" class="zoom-pane" min-zoom="1" scrollbar-x="false" scrollbar-y="false">
+                <img ng-src="{{imgUrl}}">
+              </ion-scroll>
+            </ion-content>
+          </ion-modal-view>
+    </script>
   </body>
 </html>

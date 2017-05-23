@@ -69,7 +69,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('MaglistCtrl', function($scope, $http, $stateParams, $ionicSideMenuDelegate, $ionicScrollDelegate, $timeout) {
+.controller('MaglistCtrl', function($scope, $http, $stateParams, $ionicSideMenuDelegate, $ionicScrollDelegate, $timeout, $ionicModal) {
   $scope.details = [];
   $scope.title = $stateParams.title;
   $http.get('http://api-dev.publixx.id/issue/1/magazine/'+ $stateParams.id)
@@ -85,13 +85,25 @@ angular.module('starter.controllers', [])
       things = result.data;
     });
 
-    $scope.options = {
-              noSwiping: true,
-              noSwipingClass: 'do_not_swipe',
-              watchSlidesVisibility:true,
-              pagination:false,
-    };
+  $scope.options = {
+            noSwiping: true,
+            noSwipingClass: 'do_not_swipe',
+            watchSlidesVisibility:true,
+            pagination:false,
+  };
 
-    $ionicSideMenuDelegate.canDragContent(false)
+  $ionicSideMenuDelegate.canDragContent(false)
+  $ionicModal.fromTemplateUrl('templates/modal.html', {
+    scope: $scope,
+    animation:'jelly'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+
+  $scope.openModal = function() {
+    $scope.modal.show()
+    $scope.imgUrl = "http://placekitten.com/g/500/800";
+
+  }
 
 });
