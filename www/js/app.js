@@ -61,6 +61,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
   });
 
 })
+
+.factory('appService', function($http, $rootScope) {
+  var appService = {
+    async: function() {
+      var promise = $http.get('appinfo.json').then(function (response) {
+        $rootScope.applicationsData = response.data;
+        return response.data;
+      });
+      return promise;
+    }
+  };
+  return appService;
+})
+
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 

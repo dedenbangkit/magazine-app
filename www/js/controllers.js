@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http, appService) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -11,7 +11,9 @@ angular.module('starter.controllers', [])
 
   // Form data for the login modal
   $scope.loginData = {};
-  $scope.company = [];
+  appService.async().then(function(response) {
+    $rootScope.company = response;
+  })
 
   $http.get('appinfo.json')
     .success(function(data, status, headers,config){
@@ -48,25 +50,28 @@ angular.module('starter.controllers', [])
   $scope.apps = "";
 })
 
-.controller('MaglistsCtrl', function($scope, $http, $cordovaProgress) {
-  $scope.maglists = [];
-  $http.get('http://api-dev.publixx.id/findstrict/MagzApis/2/HA10047493/3')
-    .success(function(data, status, headers,config){
-      console.log('data success');
-      console.log(data.results); // for browser console
-      $scope.maglists = data.results; // for UI
-    })
-    .error(function(data, status, headers,config){
-      console.log('data error');
-    })
-    .then(function(result){
-      things = result.data;
-    });
+.controller('MaglistsCtrl', function(
+  $rootScope,
+  $scope,
+  $http,
+  $cordovaProgress) {
+
+  $http.get('appinfo.json').success(function(data){
+    var project = data['project_id'];
+    $http.get('http://192.168.100.7:9000/find/MagzApis/'+ project +'/2JKDLFCUER')
+      .success(function(data, status, headers,config){
+        $scope.maglists = data.results;
+      })
+      .error(function(data, status, headers,config){
+        console.log('data error');
+      })
+      .then(function(result){
+        things = result.data;
+      });
+  })
   $scope.loadContent = function(){
-    $cordovaProgress.showDeterminate(false, 100000);
-
+  $cordovaProgress.showDeterminate(false, 100000);
   }
-
 })
 
 .controller('MaglistCtrl', function($scope, $http, $stateParams, $ionicSideMenuDelegate, $ionicScrollDelegate, $timeout, $ionicModal) {
