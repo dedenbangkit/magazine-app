@@ -15,8 +15,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
   $cordovaPush,
   $cordovaFileTransfer,
   $cordovaProgress,
-  $timeout,
-  $http) {
+  $timeout) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -31,8 +30,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-
-
 
     // // create Directory
     //
@@ -64,22 +61,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
   });
 
 })
-
-.factory('appService', function($http, $rootScope) {
-  var appService = {
-    async: function() {
-      var promise = $http.get('appinfo.json').then(function (response) {
-        $rootScope.applicationsData = response.data;
-        return response.data;
-      });
-      return promise;
-    }
-  };
-  return appService;
-})
-
-.config(function($stateProvider, $urlRouterProvider, $sceDelegateProvider) {
-
+.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
     .state('app', {
@@ -145,10 +127,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       }
     }
   });
-
-
-  $sceDelegateProvider.resourceUrlWhitelist(['self', new RegExp('^(http[s]?):\/\/(w{3}.)?youtube\.com/.+$')]);
-  $sceDelegateProvider.resourceUrlWhitelist(['self', new RegExp('^(http[s]?):\/\/(w{3}.)?vidio\.com/.+$')]);
 
 
   // if none of the above states are matched, use this as the fallback

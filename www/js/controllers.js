@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($rootScope, $scope, $ionicModal, $timeout, $http, appService) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -8,12 +8,25 @@ angular.module('starter.controllers', [])
   // listen for the $ionicView.enter event:
   //$scope.$on('$ionicView.enter', function(e) {
   //});
-  appService.async().then(function(response) {
-    $rootScope.company = response;
-  })
 
   // Form data for the login modal
   $scope.loginData = {};
+  $scope.company = [];
+
+  $http.get('appinfo.json')
+    .success(function(data, status, headers,config){
+      console.log('data success');
+      console.log(data); // for browser console
+      $scope.company = data; // for UI
+    })
+    .error(function(data, status, headers,config){
+      console.log('data error');
+    })
+    .then(function(result){
+      things = result.data;
+    });
+
+
   // Triggered in the login modal to close it
   $scope.closeLogin = function() {
     $scope.modal.hide();
@@ -35,38 +48,28 @@ angular.module('starter.controllers', [])
   $scope.apps = "";
 })
 
-.controller('MaglistsCtrl', function(
-  $rootScope,
-  $scope,
-  $http,
-  $cordovaProgress) {
-
-  $http.get('appinfo.json').success(function(data){
-    var project = data['project_id'];
-    $http.get('http://192.168.100.7:9000/find/MagzApis/'+ project +'/2JKDLFCUER')
-      .success(function(data, status, headers,config){
-        $scope.maglists = data.results;
-      })
-      .error(function(data, status, headers,config){
-        console.log('data error');
-      })
-      .then(function(result){
-        things = result.data;
-      });
-  })
+.controller('MaglistsCtrl', function($scope, $http, $cordovaProgress) {
+  $scope.maglists = [];
+  $http.get('http://api-dev.publixx.id/findstrict/MagzApis/2/HA10047493/3')
+    .success(function(data, status, headers,config){
+      console.log('data success');
+      console.log(data.results); // for browser console
+      $scope.maglists = data.results; // for UI
+    })
+    .error(function(data, status, headers,config){
+      console.log('data error');
+    })
+    .then(function(result){
+      things = result.data;
+    });
   $scope.loadContent = function(){
-  $cordovaProgress.showDeterminate(false, 100000);
+    $cordovaProgress.showDeterminate(false, 100000);
+
   }
+
 })
 
-.controller('MaglistCtrl', function(
-  $scope,
-  $http,
-  $stateParams,
-  $ionicSideMenuDelegate,
-  $ionicScrollDelegate,
-  $timeout,
-  $ionicModal,) {
+.controller('MaglistCtrl', function($scope, $http, $stateParams, $ionicSideMenuDelegate, $ionicScrollDelegate, $timeout, $ionicModal) {
   $scope.details = [];
   $scope.title = $stateParams.title;
   $http.get('http://api-dev.publixx.id/issue/1/magazine/'+ $stateParams.id)

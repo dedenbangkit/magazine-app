@@ -2,10 +2,9 @@
   <ion-content>
     <div ng-repeat="maglist in maglists" class="list-magazine">
     <a class="item item-thumbnail-left" href="#app/maglists/2/">
-      <img ng-src="{{maglist.issueCover}}">
-      <h2>{{maglist.issueName}}</h2>
-      <p>Release date: {{maglist.releaseDate}}</p>
-      <button class="button download-issue">Download</button>
+      <img src="{{maglist.imgUrl}}">
+      <h2>{{maglist.title}}</h2>
+      <p>{{maglist.author}}</p>
     </a>
   </div>
   </ion-content>
