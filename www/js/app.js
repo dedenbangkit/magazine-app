@@ -15,7 +15,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
   $cordovaPush,
   $cordovaFileTransfer,
   $cordovaProgress,
-  $timeout) {
+  $timeout,
+  $http) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -30,6 +31,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+
 
     // // create Directory
     //
@@ -60,6 +63,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
   });
 
+})
+
+.factory('appService', function($http, $rootScope) {
+  var appService = {
+    async: function() {
+      var promise = $http.get('appinfo.json').then(function (response) {
+        $rootScope.applicationsData = response.data;
+        return response.data;
+      });
+      return promise;
+    }
+  };
+  return appService;
 })
 
 .config(function($stateProvider, $urlRouterProvider, $sceDelegateProvider) {
