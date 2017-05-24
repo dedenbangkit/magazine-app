@@ -39,7 +39,6 @@
     ],
     "cordova": {
         "plugins": {
-            "cordova-sqlite-storage": {},
             "com.jjdltc.cordova.plugin.zip": {},
             "cordova-plugin-zip": {},
             "cordova-plugin-file": {},
