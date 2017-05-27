@@ -1,24 +1,13 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http, appService) {
-
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  // Form data for the login modal
-  $scope.loginData = {};
+.controller('AppCtrl', function($scope, $timeout, $http, appService, storageService) {
+  // ApplicationData
   appService.async().then(function(response) {
-    $rootScope.company = response;
-  })
+    $scope.company = response;
+    });
 
   $http.get('appinfo.json')
     .success(function(data, status, headers,config){
-      console.log('data success');
-      console.log(data); // for browser console
       $scope.company = data; // for UI
     })
     .error(function(data, status, headers,config){
@@ -28,22 +17,23 @@ angular.module('starter.controllers', [])
       things = result.data;
     });
 
+  // Form data for the login modal
+  var loginConsole = storageService.getAll();
+  console.log(loginConsole);
+  $scope.loginData = {};
 
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
+  $scope.closeLogin = function(){
+    }
 
-  // Perform the login action when the user submits the login form
+  // Perform the login action
   $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
+    storageService.add({'username': $scope.loginData.username});
+    storageService.add({'password': $scope.loginData.password});
+      $timeout(function() {
+        $scope.closeLogin();
+      }, 1000);
+    };
 
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
 })
 
 .controller('SettingsCtrl', function($scope) {
@@ -54,11 +44,14 @@ angular.module('starter.controllers', [])
   $rootScope,
   $scope,
   $http,
-  $cordovaProgress) {
+  $cordovaProgress,
+  $cordovaFile,
+  $cordovaFileTransfer,
+  ) {
 
   $http.get('appinfo.json').success(function(data){
     var project = data['project_id'];
-    $http.get('http://192.168.100.7:9000/find/MagzApis/'+ project +'/2JKDLFCUER')
+    $http.get('http://api-dev.publixx.id/find/MagzApis/'+ project +'/2JKDLFCUER')
       .success(function(data, status, headers,config){
         $scope.maglists = data.results;
       })
@@ -72,6 +65,29 @@ angular.module('starter.controllers', [])
   $scope.loadContent = function(){
   $cordovaProgress.showDeterminate(false, 100000);
   }
+
+  var targetPath = $rootScope.downloadDir;
+  var trustHosts = true;
+  var options = {};
+
+  alert(targetPath);
+
+  $scope.downloadContent = function(url){
+    $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
+        .then(function(result) {
+          alert('downloaded')
+        }, function(err) {
+          alert('fail download')
+        }, function (progress) {
+          $timeout(function () {
+            $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+          });
+        });
+  }
+
+
+
+
 })
 
 .controller('MaglistCtrl', function($scope, $http, $stateParams, $ionicSideMenuDelegate, $ionicScrollDelegate, $timeout, $ionicModal) {
@@ -108,7 +124,6 @@ angular.module('starter.controllers', [])
   $scope.openModal = function() {
     $scope.modal.show()
     $scope.imgUrl = "http://placekitten.com/g/500/800";
-
   }
 
 });

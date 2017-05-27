@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngStorage'])
 .run(function($rootScope,
   $cordovaFile,
   $ionicPlatform,
@@ -23,14 +23,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
-
-
     }
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
 
+    $rootScope.downloadDir = cordova.file.dataDirectory;
     // // create Directory
     //
     // $cordovaFile.createDir(cordova.file.dataDirectory, "content", false)
@@ -62,6 +61,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
 
 })
 
+
+//Aplication Service Info
+
 .factory('appService', function($http, $rootScope) {
   var appService = {
     async: function() {
@@ -74,6 +76,31 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova'])
   };
   return appService;
 })
+
+//Local Storage Service
+
+.factory ('storageService', function ($localStorage) {
+$localStorage = $localStorage.$default({
+  things: []
+});
+
+var _getAll = function () {
+  return $localStorage.things;
+};
+var _add = function (thing) {
+  $localStorage.things.push(thing);
+}
+var _remove = function (thing) {
+  $localStorage.things.splice($localStorage.things.indexOf(thing), 1);
+}
+return {
+    getAll: _getAll,
+    add: _add,
+    remove: _remove
+  };
+})
+
+//View and Controller Config
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
