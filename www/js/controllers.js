@@ -72,12 +72,20 @@ angular.module('starter.controllers', ['ui.router'])
       });
   })
 
+  $cordovaFile.checkDir(cordova.file.cacheDirectory, "contents/")
+      .then(function (data) {
+        alert(data);
+      }, function (error) {
+        // error
+      });
+
+  //Downloading File
   $scope.downloadContent = function (fn, zf){
     // DownloadService.createFolder(fn);
 
     var url = zf;
     var targetPath = cordova.file.cacheDirectory + "contents/" + fn + ".zip";
-    var unzipPath = cordova.file.cacheDirectory + "contents/";
+    var unzipPath = cordova.file.cacheDirectory + "contents/" + fn + "/";
     var trustHosts = true;
     var options = {};
     alert(targetPath);
@@ -85,7 +93,7 @@ angular.module('starter.controllers', ['ui.router'])
     $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
       .then(function(result) {
         $cordovaZip.unzip(targetPath, unzipPath).then(function () {
-          $cordovaFile.removeFile(targetPath);
+          $scope.removeFile(fn);
           }, function () {
             console.log('error');
           }, function (progressEvent) {
@@ -103,6 +111,16 @@ angular.module('starter.controllers', ['ui.router'])
         });
       });
 
+  };
+
+  //Removing File
+  $scope.removeFile = function (fn) {
+    $cordovaFile.removeFile(cordova.file.cacheDirectory + "contents/", fn + ".zip")
+      .then(function (success) {
+        alert('file removed');
+      }, function (error) {
+        alert('file not removed');
+      });
   };
 
 
