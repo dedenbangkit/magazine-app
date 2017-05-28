@@ -1,13 +1,13 @@
 <ion-view view-title="All Issues">
   <ion-content>
     <div ng-repeat="maglist in maglists" class="list-magazine">
-    <div class="item item-thumbnail-left">
+    <div class="item item-thumbnail-left" ng-switch="myVar">
       <img ng-src="{{maglist.issueCover}}">
       <h2>{{maglist.issueName}}</h2>
-      <p>Release date: {{maglist.releaseDate}} | <a ng-href="#app/maglists/2/">Test</a></p>
-      <button class="button download-issue" ng-click="downloadContent(maglist.folderName, maglist.zipFile)">Download</button>
-      <button class="button download-issue" >Read</button>
-      <progress ng-hide="downloadProgress==100" max="100" value="0" id="{{maglist.folderName}}"></progress>
+      <p>Release date: {{maglist.releaseDate}} | <a ng-href="#app/maglists/2/">Test</a> {{maglist.progress}}</p>
+      <button id="btn-{{maglist.folderName}}" class="button download-issue" ng-click="downloadContent(maglist.folderName, maglist.zipFile)">Download</button>
+      <progress max="100" value="0" id="{{maglist.folderName}}"></progress>
+      <p></p>
     </div>
   </div>
   </ion-content>

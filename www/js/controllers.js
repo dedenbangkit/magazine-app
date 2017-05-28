@@ -57,6 +57,7 @@ angular.module('starter.controllers', ['ui.router'])
       .success(function(data, status, headers,config){
         $scope.maglists = _.map(data.results, function(thing) {
           thing.folderName = thing.zipFile.substring(thing.zipFile.lastIndexOf('/')+1).slice(0,-4);
+          thing.progress = 0;
           return thing;
         });
         console.log($scope.maglists);
@@ -84,7 +85,7 @@ angular.module('starter.controllers', ['ui.router'])
     $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
       .then(function(result) {
         $cordovaZip.unzip(targetPath, unzipPath).then(function () {
-          $cordovaFile.removeFile(targetPath)
+          $cordovaFile.removeFile(targetPath);
           }, function () {
             console.log('error');
           }, function (progressEvent) {
@@ -94,8 +95,11 @@ angular.module('starter.controllers', ['ui.router'])
         alert('error');
       }, function (progress) {
         $timeout(function () {
-          downloadProgress = (progress.loaded / progress.total) * 100;
-          document.getElementById(fn).value = downloadProgress;
+          progressBar = (progress.loaded / progress.total) * 100;
+          document.getElementById(fn).value = progressBar;
+          $scope.$apply(function() {
+              $scope.maglists.progress = progressBar;
+          });
         });
       });
 

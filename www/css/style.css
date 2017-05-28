@@ -165,6 +165,7 @@ progress[value] {
   -webkit-appearance: none;
    appearance: none;
    height: 2px;
+   display: block;
 }
 
 progress[value]::-webkit-progress-bar {
@@ -176,6 +177,20 @@ progress[value]::-webkit-progress-bar {
 progress[value]::-webkit-progress-value {
   background-color: #2c539e;
   border-radius: 2px;
+}
+
+progress[value="0"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: none;
+}
+
+progress[value="100"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: none;
 }
 
 .download-issue{
