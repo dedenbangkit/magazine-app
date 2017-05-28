@@ -77,7 +77,7 @@ angular.module('starter.controllers', ['ui.router'])
 
     var url = zf;
     var targetPath = cordova.file.cacheDirectory + "contents/" + fn + ".zip";
-    var unzipPath = cordova.file.cacheDirectory + "contents/" + fn + "/" + fn + "/";
+    var unzipPath = cordova.file.cacheDirectory + "contents/";
     var trustHosts = true;
     var options = {};
     alert(targetPath);
