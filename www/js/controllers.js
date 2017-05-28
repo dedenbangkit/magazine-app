@@ -1,6 +1,6 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ui.router'])
 
-.controller('AppCtrl', function($scope, $timeout, $http, appService, storageService) {
+.controller('AppCtrl', function($scope, $timeout, $http, $state, $window, appService, StorageService) {
   // ApplicationData
   appService.async().then(function(response) {
     $scope.company = response;
@@ -17,21 +17,19 @@ angular.module('starter.controllers', [])
       things = result.data;
     });
 
-  // Form data for the login modal
-  var loginConsole = storageService.getAll();
-  console.log(loginConsole);
+  // Form data for the login
+  $scope.isLogged = parseInt(StorageService.getStatus());
+  console.log($scope.isLogged);
   $scope.loginData = {};
-
-  $scope.closeLogin = function(){
-    }
+  userLog = StorageService.getAll();
+  $scope.user = userLog[0];
 
   // Perform the login action
   $scope.doLogin = function() {
-    storageService.add({'username': $scope.loginData.username});
-    storageService.add({'password': $scope.loginData.password});
-      $timeout(function() {
-        $scope.closeLogin();
-      }, 1000);
+    StorageService.add({'username': $scope.loginData.username, 'password': $scope.loginData.password});
+    StorageService.changeStatus('1');
+    $window.location.reload(true);
+    $state.go('app.settings');
     };
 
 })

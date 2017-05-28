@@ -1,5 +1,7 @@
-<ion-view view-title="Account">
+<ion-view view-title="Account" cache-view="false">
   <ion-content>
+
+    <div ng-if='isLogged === 0'>
     <form ng-submit="doLogin()">
       <div class="list">
         <label class="item item-input">
@@ -16,5 +18,11 @@
         </label>
       </div>
     </form>
+    </div>
+
+    <div class="padding" ng-if='isLogged === 1'>
+      {{user.username}}
+    </div>
+
   </ion-content>
 </ion-view>

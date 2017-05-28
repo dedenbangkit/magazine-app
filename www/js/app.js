@@ -79,10 +79,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngStora
 
 //Local Storage Service
 
-.factory ('storageService', function ($localStorage) {
+.factory ('StorageService', function ($localStorage) {
 $localStorage = $localStorage.$default({
-  things: []
+  things: [],
+  status: '0'
 });
+var _getStatus = function() {
+  return $localStorage.status;
+};
+
+var _changeStatus = function(thing) {
+  $localStorage.status = thing;
+  return $localStorage.status;
+}
 
 var _getAll = function () {
   return $localStorage.things;
@@ -94,6 +103,8 @@ var _remove = function (thing) {
   $localStorage.things.splice($localStorage.things.indexOf(thing), 1);
 }
 return {
+    changeStatus: _changeStatus,
+    getStatus: _getStatus,
     getAll: _getAll,
     add: _add,
     remove: _remove
@@ -105,7 +116,7 @@ return {
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-    .state('app', {
+  .state('app', {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
