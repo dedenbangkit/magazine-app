@@ -75,7 +75,7 @@ angular.module('starter.controllers', ['ui.router'])
     // DownloadService.createFolder(fn);
 
     var url = zf;
-    var targetPath = cordova.file.cacheDirectory + "contents/" + fn + "/" + fn + ".zip";
+    var targetPath = cordova.file.cacheDirectory + "contents/" + fn + ".zip";
     var unzipPath = cordova.file.cacheDirectory + "contents/" + fn + "/" + fn + "/";
     var trustHosts = true;
     var options = {};
@@ -84,7 +84,7 @@ angular.module('starter.controllers', ['ui.router'])
     $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
       .then(function(result) {
         $cordovaZip.unzip(targetPath, unzipPath).then(function () {
-            console.log('unzip success');
+          $cordovaFile.removeFile(targetPath)
           }, function () {
             console.log('error');
           }, function (progressEvent) {
@@ -95,7 +95,7 @@ angular.module('starter.controllers', ['ui.router'])
       }, function (progress) {
         $timeout(function () {
           downloadProgress = (progress.loaded / progress.total) * 100;
-          document.getElementById("ft-prog").value = downloadProgress;
+          document.getElementById(fn).value = downloadProgress;
         });
       });
 

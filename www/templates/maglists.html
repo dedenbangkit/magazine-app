@@ -6,7 +6,8 @@
       <h2>{{maglist.issueName}}</h2>
       <p>Release date: {{maglist.releaseDate}} | <a ng-href="#app/maglists/2/">Test</a></p>
       <button class="button download-issue" ng-click="downloadContent(maglist.folderName, maglist.zipFile)">Download</button>
-      <progress ng-hide="downloadProgress==100" max="100" value="0" id="ft-prog"></progress>
+      <button class="button download-issue" >Read</button>
+      <progress ng-hide="downloadProgress==100" max="100" value="0" id="{{maglist.folderName}}"></progress>
     </div>
   </div>
   </ion-content>
