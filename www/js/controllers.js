@@ -72,13 +72,6 @@ angular.module('starter.controllers', ['ui.router'])
       });
   })
 
-  $cordovaFile.checkDir(cordova.file.cacheDirectory, "contents/")
-      .then(function (data) {
-        alert(data);
-      }, function (error) {
-        // error
-      });
-
   //Downloading File
   $scope.downloadContent = function (fn, zf){
     // DownloadService.createFolder(fn);
@@ -94,6 +87,7 @@ angular.module('starter.controllers', ['ui.router'])
       .then(function(result) {
         $cordovaZip.unzip(targetPath, unzipPath).then(function () {
           $scope.removeFile(fn);
+          $scope.testing(fn);
           }, function () {
             console.log('error');
           }, function (progressEvent) {
@@ -112,6 +106,15 @@ angular.module('starter.controllers', ['ui.router'])
       });
 
   };
+
+  $scope.testing = function (fn) {
+    $cordovaFile.checkDir(cordova.file.cacheDirectory, "contents/" + fn + "/")
+        .then(function (data) {
+          alert(data);
+        }, function (error) {
+          // error
+        });
+  }
 
   //Removing File
   $scope.removeFile = function (fn) {
