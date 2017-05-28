@@ -71,7 +71,7 @@ angular.module('starter.controllers', ['ui.router'])
   })
 
   $scope.downloadContent = function (fn, zf){
-    DownloadService.createFolder(fn);
+    // DownloadService.createFolder(fn);
 
     var url = zf;
     var targetPath = cordova.file.cacheDirectory + "/" + fn + "/" + fn + ".zip";
@@ -86,8 +86,8 @@ angular.module('starter.controllers', ['ui.router'])
         alert(err);
       }, function (progress) {
         $timeout(function () {
-          downloadProgress = (progress.loaded / progress.total) * 100;
-          document.getElementById("ft-prog").value = downloadProgress;
+          $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+          document.getElementById("ft-prog").value = $scope.downloadProgress;
         });
       });
 
