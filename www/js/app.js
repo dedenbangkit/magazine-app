@@ -26,7 +26,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngStora
     }
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
+      StatusBar.styleBlackOpaque();
     }
 
     $rootScope.downloadDir = cordova.file.dataDirectory;
@@ -112,6 +112,20 @@ return {
 })
 
 //Download factory
+.factory('DownloadService', function($cordovaFile, $cordovaFileTransfer, $timeout) {
+  var DownloadService = {
+    createFolder: function(fn, zf) {
+      var folder = $cordovaFile.createDir(cordova.file.cacheDirectory, fn, false)
+          .then(function (success) {
+            alert('folder' + fn + 'created');
+          }, function (error) {
+            alert('folder error')
+          });
+      return folder;
+    },
+  }
+  return DownloadService;
+})
 
 //View and Controller Config
 

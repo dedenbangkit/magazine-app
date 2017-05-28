@@ -45,24 +45,53 @@ angular.module('starter.controllers', ['ui.router'])
   $cordovaProgress,
   $cordovaFile,
   $cordovaFileTransfer,
+  $timeout,
   lodash,
+  DownloadService
   ) {
 
   $http.get('appinfo.json').success(function(data){
     var project = data['project_id'];
     $http.get('http://api-dev.publixx.id/find/MagzApis/'+ project +'/2JKDLFCUER')
       .success(function(data, status, headers,config){
-        $scope.maglists = data.results;
+        $scope.maglists = _.map(data.results, function(thing) {
+          thing.folderName = thing.zipFile.substring(thing.zipFile.lastIndexOf('/')+1).slice(0,-4);
+          return thing;
+        });
+        console.log($scope.maglists);
       })
       .error(function(data, status, headers,config){
         console.log('data error');
       })
       .then(function(result){
-        data = result.data.results[0];
-        $scope.folderName = data.zipFile.substring(data.zipFile.lastIndexOf('/')+1).slice(0,-4);
-        console.log(data.zipFile);
+        // data = result.data.results[0];
+        // $scope.folderName = data.zipFile.substring(data.zipFile.lastIndexOf('/')+1).slice(0,-4);
+        // console.log(data.zipFile);
       });
   })
+
+  $scope.downloadContent = function (fn, zf){
+    DownloadService.createFolder(fn);
+
+    var url = zf;
+    var targetPath = cordova.file.cacheDirectory + "/" + fn + "/" + fn + ".zip";
+    var trustHosts = true;
+    var options = {};
+    alert(targetPath);
+
+    $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
+      .then(function(result) {
+        alert(result);
+      }, function(err) {
+        alert(err);
+      }, function (progress) {
+        $timeout(function () {
+          downloadProgress = (progress.loaded / progress.total) * 100;
+          document.getElementById("ft-prog").value = downloadProgress;
+        });
+      });
+
+  };
 
 
 })
