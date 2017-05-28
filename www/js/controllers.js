@@ -45,6 +45,7 @@ angular.module('starter.controllers', ['ui.router'])
   $cordovaProgress,
   $cordovaFile,
   $cordovaFileTransfer,
+  $cordovaZip,
   $timeout,
   lodash,
   DownloadService
@@ -74,20 +75,27 @@ angular.module('starter.controllers', ['ui.router'])
     // DownloadService.createFolder(fn);
 
     var url = zf;
-    var targetPath = cordova.file.cacheDirectory + "/" + fn + "/" + fn + ".zip";
+    var targetPath = cordova.file.cacheDirectory + "contents/" + fn + "/" + fn + ".zip";
+    var unzipPath = cordova.file.cacheDirectory + "contents/" + fn + "/" + fn + "/";
     var trustHosts = true;
     var options = {};
     alert(targetPath);
 
     $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
       .then(function(result) {
-        alert(result);
+        $cordovaZip.unzip(targetPath, unzipPath).then(function () {
+            console.log('unzip success');
+          }, function () {
+            console.log('error');
+          }, function (progressEvent) {
+            console.log(progressEvent);
+          });
       }, function(err) {
-        alert(err);
+        alert('error');
       }, function (progress) {
         $timeout(function () {
-          $scope.downloadProgress = (progress.loaded / progress.total) * 100;
-          document.getElementById("ft-prog").value = $scope.downloadProgress;
+          downloadProgress = (progress.loaded / progress.total) * 100;
+          document.getElementById("ft-prog").value = downloadProgress;
         });
       });
 
