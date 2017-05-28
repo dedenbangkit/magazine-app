@@ -45,7 +45,6 @@ angular.module('starter.controllers', ['ui.router'])
   $cordovaProgress,
   $cordovaFile,
   $cordovaFileTransfer,
-  lodash,
   ) {
 
   $http.get('appinfo.json').success(function(data){
@@ -58,11 +57,33 @@ angular.module('starter.controllers', ['ui.router'])
         console.log('data error');
       })
       .then(function(result){
-        data = result.data.results[0];
-        $scope.folderName = data.zipFile.substring(data.zipFile.lastIndexOf('/')+1).slice(0,-4);
-        console.log(data.zipFile);
+        things = result.data;
       });
   })
+  // $scope.loadContent = function(){
+  // $cordovaProgress.showDeterminate(false, 100000);
+  // }
+
+  // var targetPath = $rootScope.downloadDir;
+  // var trustHosts = true;
+  // var options = {};
+  //
+  // alert(targetPath);
+  //
+  // $scope.downloadContent = function(url){
+  //   $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
+  //       .then(function(result) {
+  //         alert('downloaded')
+  //       }, function(err) {
+  //         alert('fail download')
+  //       }, function (progress) {
+  //         $timeout(function () {
+  //           $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+  //         });
+  //       });
+  // }
+
+
 
 
 })

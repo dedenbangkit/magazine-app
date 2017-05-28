@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngStorage'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngStorage', 'ngLodash'])
 .run(function($rootScope,
   $cordovaFile,
   $ionicPlatform,
@@ -95,7 +95,7 @@ var _changeStatus = function(thing) {
 
 var _getAll = function () {
   return $localStorage.things;
-};
+}
 var _add = function (thing) {
   $localStorage.things.push(thing);
 }
@@ -110,6 +110,8 @@ return {
     remove: _remove
   };
 })
+
+//Download factory
 
 //View and Controller Config
 
