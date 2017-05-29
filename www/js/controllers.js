@@ -60,9 +60,6 @@ angular.module('starter.controllers', ['ui.router'])
   $timeout,
   lodash,
   ) {
-
-
-
   $http.get('appinfo.json').success(function(data){
     var project = data['project_id'];
     $http.get('http://api-dev.publixx.id/find/MagzApis/'+ project +'/2JKDLFCUER')
@@ -89,8 +86,8 @@ angular.module('starter.controllers', ['ui.router'])
     // DownloadService.createFolder(fn);
 
     var url = zf;
-    var targetPath = cordova.file.cacheDirectory + "contents/" + fn + ".zip";
-    var unzipPath = cordova.file.cacheDirectory + "contents/" + fn + "/";
+    var targetPath = cordova.file.dataDirectory + "contents/" + fn + ".zip";
+    var unzipPath = cordova.file.dataDirectory + "contents/" + fn + "/";
     var trustHosts = true;
     var options = {};
     alert(targetPath);
@@ -99,7 +96,7 @@ angular.module('starter.controllers', ['ui.router'])
       .then(function(result) {
         $cordovaZip.unzip(targetPath, unzipPath).then(function () {
           // $scope.removeFile(fn);
-            $cordovaFile.checkDir(cordova.file.cacheDirectory, "contents/" + fn + "/")
+            $cordovaFile.checkDir(cordova.file.dataDirectory, "contents/" + fn + "/")
                 .then(function (data) {
                   // alert(Object.keys(data));
                   // alert(Object.keys(data.isFile));
@@ -134,7 +131,7 @@ angular.module('starter.controllers', ['ui.router'])
 
   //Removing File
   $scope.removeFile = function (fn) {
-    $cordovaFile.removeFile(cordova.file.cacheDirectory + "contents/", fn + ".zip")
+    $cordovaFile.removeFile(cordova.file.dataDirectory + "contents/", fn + ".zip")
       .then(function (success) {
         alert('file removed');
       }, function (error) {
@@ -162,7 +159,7 @@ angular.module('starter.controllers', ['ui.router'])
 
   var N = 10;
   // $scope.pages = Array.apply(null, {length: N}).map(Number.call, Number);
-  // $scope.path = cordova.file.cacheDirectory + "contents/" + $stateParams.folderName + "/";
+  // $scope.path = cordova.file.dataDirectory + "contents/" + $stateParams.folderName + "/";
   // alert($scope.path);
 
 

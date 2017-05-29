@@ -27,9 +27,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngStora
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleBlackOpaque();
+      StatusBar.backgroundColorByName("black");
     }
 
-    $rootScope.downloadDir = cordova.file.dataDirectory;
+    // $rootScope.downloadDir = cordova.file.dataDirectory;
     // // create Directory
     //
     // $cordovaFile.createDir(cordova.file.dataDirectory, "content", false)

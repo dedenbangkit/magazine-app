@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.ionicframework.publixx579660" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>publixx</name>
+    <name>Publixx</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content src="index.html" />
@@ -18,29 +18,26 @@
     <preference name="android-minSdkVersion" value="16" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashMaintainAspectRatio" value="true" />
-    <preference name="FadeSplashScreenDuration" value="300" />
+    <preference name="FadeSplashScreenDuration" value="2000" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
+    <preference name="SplashScreenDelay" value="2000" />
     <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="3000" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
-    <platform name="android">
-        <allow-intent href="http://*/*" />
-        <allow-intent href="https://*/*" />
-        <allow-intent href="market:*" />
-        <icon density="ldpi" src="www/res/icons/android/icon-36-ldpi.png" />
-        <icon density="mdpi" src="www/res/icons/android/icon-48-mdpi.png" />
-        <icon density="hdpi" src="www/res/icons/android/icon-72-hdpi.png" />
-        <icon density="xhdpi" src="www/res/icons/android/icon-96-xhdpi.png" />
-        <icon density="xxhdpi" src="www/res/icons/android/icon-144-xxhdpi.png" />
-        <icon density="xxxhdpi" src="www/res/icons/android/icon-192-xxxhdpi.png" />
-        <splash density="land-ldpi" src="www/res/screens/android/screen-ldpi-landscape.png" />
-        <splash density="land-mdpi" src="www/res/screens/android/screen-mdpi-landscape.png" />
-        <splash density="land-hdpi" src="www/res/screens/android/screen-hdpi-landscape.png" />
-        <splash density="land-xhdpi" src="www/res/screens/android/screen-xhdpi-landscape.png" />
-        <splash density="port-ldpi" src="www/res/screens/android/screen-ldpi-portrait.png" />
-        <splash density="port-mdpi" src="www/res/screens/android/screen-mdpi-portrait.png" />
-        <splash density="port-hdpi" src="www/res/screens/android/screen-hdpi-portrait.png" />
-        <splash density="port-xhdpi" src="www/res/screens/android/screen-xhdpi-portrait.png" />
+    <platform name='android'>
+        <icon src='www/res/icons/android/icon-ldpi-36.png' density='ldpi'></icon>
+        <icon src='www/res/icons/android/icon-mdpi-48.png' density='mdpi'></icon>
+        <icon src='www/res/icons/android/icon-hdpi-72.png' density='hdpi'></icon>
+        <icon src='www/res/icons/android/icon-xhdpi-96.png' density='xhdpi'></icon>
+        <icon src='www/res/icons/android/icon-xxhdpi-144.png' density='xxhdpi'></icon>
+        <icon src='www/res/icons/android/icon-xxxhdpi-192.png' density='xxxhdpi'></icon>
+        <splash src='www/res/screens/android/screen-ldpi-landscape.png' density='land-ldpi'></splash>
+        <splash src='www/res/screens/android/screen-mdpi-landscape.png' density='land-mdpi'></splash>
+        <splash src='www/res/screens/android/screen-hdpi-landscape.png' density='land-hdpi'></splash>
+        <splash src='www/res/screens/android/screen-xhdpi-landscape.png' density='land-xhdpi'></splash>
+        <splash src='www/res/screens/android/screen-ldpi-portrait.png' density='port-ldpi'></splash>
+        <splash src='www/res/screens/android/screen-mdpi-portrait.png' density='port-mdpi'></splash>
+        <splash src='www/res/screens/android/screen-hdpi-portrait.png' density='port-hdpi'></splash>
+        <splash src='www/res/screens/android/screen-xhdpi-portrait.png' density='port-xhdpi'></splash>
     </platform>
     <platform name="ios">
         <allow-intent href="http://*/*" />
