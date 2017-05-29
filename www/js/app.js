@@ -79,14 +79,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngStora
 
 //Local Storage Service
 
-.factory ('StorageService', function ($localStorage) {
+.factory ('StorageService', function ($localStorage, $window, $state) {
 $localStorage = $localStorage.$default({
   things: [],
   status: '0'
 });
 var _getStatus = function() {
   return $localStorage.status;
-};
+}
 
 var _changeStatus = function(thing) {
   $localStorage.status = thing;
@@ -109,22 +109,6 @@ return {
     add: _add,
     remove: _remove
   };
-})
-
-//Download factory
-.factory('DownloadService', function($cordovaFile, $cordovaFileTransfer, $timeout) {
-  var DownloadService = {
-    createFolder: function(fn, zf) {
-      var folder = $cordovaFile.createDir(cordova.file.cacheDirectory, fn, false)
-          .then(function (success) {
-            alert('folder' + fn + 'created');
-          }, function (error) {
-            alert('folder error')
-          });
-      return folder;
-    },
-  }
-  return DownloadService;
 })
 
 //View and Controller Config
@@ -150,7 +134,7 @@ return {
   })
 
   .state('app.single', {
-    url: '/maglists/:id/:title',
+    url: '/maglists/:folderName/:issueName',
     views: {
       'menuContent': {
         templateUrl: 'templates/maglist.html',

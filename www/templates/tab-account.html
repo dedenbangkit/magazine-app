@@ -1,7 +1,7 @@
-<ion-view view-title="Account" cache-view="false">
-  <ion-content>
+<ion-view view-title="Account">
+  <ion-content ng-switch="isLogged">
 
-    <div ng-if='isLogged === 0'>
+    <div ng-switch-when='0' class="animate-switch">
     <form ng-submit="doLogin()">
       <div class="list">
         <label class="item item-input">
@@ -20,7 +20,7 @@
     </form>
     </div>
 
-    <div class="padding" ng-if='isLogged === 1'>
+    <div class="padding animate-switch" ng-switch-when='1'>
       {{user.username}}
     </div>
 

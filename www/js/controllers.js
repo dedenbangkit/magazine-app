@@ -17,21 +17,32 @@ angular.module('starter.controllers', ['ui.router'])
       things = result.data;
     });
 
+
+
+  $scope.changeStatus = function(active, user) {
+      $scope.isLogged = active;
+      $scope.user = user;
+      console.log($scope.isLogged);
+  };
+
   // Form data for the login
   $scope.isLogged = parseInt(StorageService.getStatus());
+  $scope.$watch('isLogged', function() {});
   console.log($scope.isLogged);
   $scope.loginData = {};
   userLog = StorageService.getAll();
   $scope.user = userLog[0];
+  $scope.$watch('user', function() {});
+  console.log(StorageService.getAll());
 
   // Perform the login action
   $scope.doLogin = function() {
     StorageService.add({'username': $scope.loginData.username, 'password': $scope.loginData.password});
     StorageService.changeStatus('1');
-    $window.location.reload(true);
-    $state.go('app.settings');
+    $scope.changeStatus('1', {'username': $scope.loginData.username, 'password': $scope.loginData.password});
+    // $window.location.reload(true);
+    // $state.go('app.settings');
     };
-
 })
 
 .controller('SettingsCtrl', function($scope) {
@@ -48,8 +59,9 @@ angular.module('starter.controllers', ['ui.router'])
   $cordovaZip,
   $timeout,
   lodash,
-  DownloadService
   ) {
+
+
 
   $http.get('appinfo.json').success(function(data){
     var project = data['project_id'];
@@ -58,6 +70,7 @@ angular.module('starter.controllers', ['ui.router'])
         $scope.maglists = _.map(data.results, function(thing) {
           thing.folderName = thing.zipFile.substring(thing.zipFile.lastIndexOf('/')+1).slice(0,-4);
           thing.progress = 0;
+          thing.index = thing.magazineId - 1;
           return thing;
         });
         console.log($scope.maglists);
@@ -71,9 +84,8 @@ angular.module('starter.controllers', ['ui.router'])
         // console.log(data.zipFile);
       });
   })
-
   //Downloading File
-  $scope.downloadContent = function (fn, zf){
+  $scope.downloadContent = function (fn, zf, idx){
     // DownloadService.createFolder(fn);
 
     var url = zf;
@@ -86,35 +98,39 @@ angular.module('starter.controllers', ['ui.router'])
     $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
       .then(function(result) {
         $cordovaZip.unzip(targetPath, unzipPath).then(function () {
-          $scope.removeFile(fn);
-          $scope.testing(fn);
+          // $scope.removeFile(fn);
+            $cordovaFile.checkDir(cordova.file.cacheDirectory, "contents/" + fn + "/")
+                .then(function (data) {
+                  // alert(Object.keys(data));
+                  // alert(Object.keys(data.isFile));
+                  // alert(Object.keys(data.isDirectory));
+                  // alert(Object.keys(data.name[0]));
+                  // Object.keys(data.name).forEach(function (it) {
+                  //   alert(it);
+                  // });
+                  // var folders = Object.key(data.nativeURL);
+                  // isFile, isDirectory, name, fullPath, filesystem, nativeURL, constructor, createReader, getDirectory, removeRecursively, getFile, getMetadata,
+                  // setMetadata, moveTo, copyTo, toInternalURL, toURL, toNativeURL, toURI, remove, getParent,
+                  // for(var property in data.name) {
+                  //     alert(property);
+                });
           }, function () {
             console.log('error');
           }, function (progressEvent) {
             console.log(progressEvent);
           });
       }, function(err) {
-        alert('error');
+        alert('download failed');
       }, function (progress) {
         $timeout(function () {
           progressBar = (progress.loaded / progress.total) * 100;
           document.getElementById(fn).value = progressBar;
-          $scope.$apply(function() {
-              $scope.maglists.progress = progressBar;
-          });
+          $scope.$watch('maglists['+idx+'].progress', function() {});
+          $scope.maglists[idx].progress = progressBar;
         });
       });
 
   };
-
-  $scope.testing = function (fn) {
-    $cordovaFile.checkDir(cordova.file.cacheDirectory, "contents/" + fn + "/")
-        .then(function (data) {
-          alert(data);
-        }, function (error) {
-          // error
-        });
-  }
 
   //Removing File
   $scope.removeFile = function (fn) {
@@ -129,9 +145,27 @@ angular.module('starter.controllers', ['ui.router'])
 
 })
 
-.controller('MaglistCtrl', function($scope, $http, $stateParams, $ionicSideMenuDelegate, $ionicScrollDelegate, $timeout, $ionicModal) {
+//Read Page
+
+.controller('MaglistCtrl', function($scope,
+  $http,
+  $stateParams,
+  $ionicSideMenuDelegate,
+  $ionicScrollDelegate,
+  $timeout,
+  $ionicModal,
+  $cordovaFile,
+  ) {
   $scope.details = [];
-  $scope.title = $stateParams.title;
+  $scope.id = $stateParams.folderName;
+  $scope.title = $stateParams.issueName;
+
+  var N = 10;
+  $scope.pages = Array.apply(null, {length: N}).map(Number.call, Number);
+  $scope.path = cordova.file.cacheDirectory + "contents/" + $stateParams.folderName + "/";
+  alert($scope.path);
+
+
   $http.get('http://api-dev.publixx.id/issue/1/magazine/'+ $stateParams.id)
     .success(function(data, status, headers,config){
       console.log('data success');
