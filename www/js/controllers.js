@@ -17,8 +17,6 @@ angular.module('starter.controllers', ['ui.router'])
       things = result.data;
     });
 
-
-
   $scope.changeStatus = function(active, user) {
       $scope.isLogged = active;
       $scope.user = user;
@@ -144,7 +142,8 @@ angular.module('starter.controllers', ['ui.router'])
 
 //Read Page
 
-.controller('MaglistCtrl', function($scope,
+.controller('MaglistCtrl', function(
+  $scope,
   $http,
   $stateParams,
   $ionicSideMenuDelegate,
@@ -161,20 +160,6 @@ angular.module('starter.controllers', ['ui.router'])
   // $scope.pages = Array.apply(null, {length: N}).map(Number.call, Number);
   // $scope.path = cordova.file.dataDirectory + "contents/" + $stateParams.folderName + "/";
   // alert($scope.path);
-
-
-  $http.get('http://api-dev.publixx.id/issue/1/magazine/'+ $stateParams.id)
-    .success(function(data, status, headers,config){
-      console.log('data success');
-      console.log(data.results); // for browser console
-      $scope.details = data.results; // for UI
-    })
-    .error(function(data, status, headers,config){
-      console.log('data error');
-    })
-    .then(function(result){
-      things = result.data;
-    });
 
   $scope.options = {
             noSwiping: true,
