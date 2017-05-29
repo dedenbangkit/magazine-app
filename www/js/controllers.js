@@ -161,9 +161,9 @@ angular.module('starter.controllers', ['ui.router'])
   $scope.title = $stateParams.issueName;
 
   var N = 10;
-  $scope.pages = Array.apply(null, {length: N}).map(Number.call, Number);
-  $scope.path = cordova.file.cacheDirectory + "contents/" + $stateParams.folderName + "/";
-  alert($scope.path);
+  // $scope.pages = Array.apply(null, {length: N}).map(Number.call, Number);
+  // $scope.path = cordova.file.cacheDirectory + "contents/" + $stateParams.folderName + "/";
+  // alert($scope.path);
 
 
   $http.get('http://api-dev.publixx.id/issue/1/magazine/'+ $stateParams.id)
