@@ -56,6 +56,7 @@ angular.module('starter.controllers', ['ui.router'])
   $cordovaFileTransfer,
   $cordovaZip,
   $timeout,
+  $location,
   lodash,
   ) {
   $http.get('appinfo.json').success(function(data){
