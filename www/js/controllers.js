@@ -79,7 +79,10 @@ angular.module('starter.controllers', ['ui.router'])
         // $scope.folderName = data.zipFile.substring(data.zipFile.lastIndexOf('/')+1).slice(0,-4);
         // console.log(data.zipFile);
       });
-  })
+  });
+  $scope.goRead = function (folderName, issueName){
+    $location.path('#app/maglists/'+folderName+'/'+issueName);
+  }
   //Downloading File
   $scope.downloadContent = function (fn, zf, idx){
     // DownloadService.createFolder(fn);
@@ -159,7 +162,7 @@ angular.module('starter.controllers', ['ui.router'])
   ) {
   $scope.details = [];
   $scope.id = $stateParams.folderName;
-  $scope.title = $stateParams.magazineId;
+  $scope.issueName = $stateParams.issueName;
 
   // http://localhost:9000/issue/2/MagzApis/
 
