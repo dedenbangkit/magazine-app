@@ -125,6 +125,10 @@ angular.module('starter.controllers', ['ui.router'])
         });
       });
 
+      function goRead(x,y){
+        $state.go('maglists/:folderName/:magazineId',{ folderName: x, magazineId: y });
+      }
+
   };
 
   //Removing File
@@ -154,7 +158,23 @@ angular.module('starter.controllers', ['ui.router'])
   ) {
   $scope.details = [];
   $scope.id = $stateParams.folderName;
-  $scope.title = $stateParams.issueName;
+  $scope.title = $stateParams.magazineId;
+
+  // http://localhost:9000/issue/2/MagzApis/
+
+  // $http.get('http://192.168.1.10:9000/issue/'+ $stateParams.magazineId +'/MagzApis/')
+  //   .success(function(data, status, headers,config){
+  //     $scope.pages = _.map(data.results, function(it) {
+  //       it.html = htmlString(data.pageContent);
+  //       return it;
+  //     });
+  //   })
+  //   .error(function(data, status, headers,config){
+  //     console.log('data error');
+  //   })
+  //   .then(function(result){
+  //
+  //   });
 
   var N = 10;
   // $scope.pages = Array.apply(null, {length: N}).map(Number.call, Number);

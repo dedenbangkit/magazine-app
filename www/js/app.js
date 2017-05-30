@@ -78,6 +78,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngStora
   return appService;
 })
 
+.directive( 'goClick', function ( $location ) {
+  return function ( scope, element, attrs ) {
+    var path;
+
+    attrs.$observe( 'goClick', function (val) {
+      path = val;
+    });
+
+    element.bind( 'click', function () {
+      scope.$apply( function () {
+        $location.path( path );
+      });
+    });
+  };
+});
+
 //Local Storage Service
 
 .factory ('StorageService', function ($localStorage, $window, $state) {
@@ -135,7 +151,7 @@ return {
   })
 
   .state('app.single', {
-    url: '/maglists/:folderName/:issueName',
+    url: '/maglists/:folderName/:magazineId',
     views: {
       'menuContent': {
         templateUrl: 'templates/maglist.html',
