@@ -48,7 +48,6 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
 })
 
 .controller('MaglistsCtrl', function(
-  $rootScope,
   $scope,
   $http,
   $cordovaProgress,
@@ -88,8 +87,8 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
     // DownloadService.createFolder(fn);
 
     var url = zf;
-    var targetPath = cordova.file.dataDirectory + "contents/" + fn + ".zip";
-    var unzipPath = cordova.file.dataDirectory + "contents/" + fn + "/";
+    var targetPath = cordova.file.cacheDirectory + "contents/" + fn + ".zip";
+    var unzipPath = cordova.file.cacheDirectory + "contents/" + fn + "/";
     var trustHosts = true;
     var options = {};
     alert(targetPath);
@@ -99,7 +98,7 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
         $cordovaZip.unzip(targetPath, unzipPath).then(function () {
           // $scope.removeFile(fn);
             alert('unzip success');
-            $cordovaFile.checkDir(cordova.file.dataDirectory, "contents/" + fn + "/")
+            $cordovaFile.checkDir(cordova.file.cacheDirectory, "contents/" + fn + "/")
                 .then(function (data) {
                   // alert(Object.keys(data));
                   // alert(Object.keys(data.isFile));
@@ -134,7 +133,7 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
 
   //Removing File
   $scope.removeFile = function (fn) {
-    $cordovaFile.removeFile(cordova.file.dataDirectory + "contents/", fn + ".zip")
+    $cordovaFile.removeFile(cordova.file.cacheDirectory + "contents/", fn + ".zip")
       .then(function (success) {
         alert('file removed');
       }, function (error) {
@@ -168,7 +167,7 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
     .success(function(data, status, headers,config){
       var total = data.results.length;
       $scope.pages = _.map(data.results, function(thing, total) {
-        thing.filePath = cordova.file.dataDirectory + "contents/" + $scope.folderName + "/" + (total+1) + ".html";
+        thing.filePath = cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/" + (total+1) + ".html";
         return thing;
       });
       console.log($scope.pages);
@@ -182,7 +181,7 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
 
   var N = 10;
   var pages = Array.apply(null, {length: N}).map(Number.call, Number);
-  // $scope.path = cordova.file.dataDirectory + "contents/" + $stateParams.folderName + "/";
+  // $scope.path = cordova.file.cacheDirectory + "contents/" + $stateParams.folderName + "/";
   console.log(pages);
 
   $scope.options = {
