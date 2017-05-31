@@ -159,6 +159,7 @@ angular.module('starter.controllers', ['ui.router'])
   $timeout,
   $ionicModal,
   $cordovaFile,
+  $cordovaPush
   ) {
   $scope.details = [];
   $scope.id = $stateParams.folderName;
