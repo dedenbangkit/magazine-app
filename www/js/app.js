@@ -135,7 +135,7 @@ return {
   })
 
   .state('app.single', {
-    url: '/maglists/:id/:title',
+    url: '/maglists/:folderName/:issueName/:magazineId',
     views: {
       'menuContent': {
         templateUrl: 'templates/maglist.html',
