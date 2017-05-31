@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngStorage', 'ngLodash'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngStorage', 'ngLodash', 'ngSanitize'])
 .run(function($rootScope,
   $cordovaFile,
   $ionicPlatform,
@@ -135,7 +135,7 @@ return {
   })
 
   .state('app.single', {
-    url: '/maglists/:folderName/:issueName',
+    url: '/maglists/:folderName/:issueName/:magazineId',
     views: {
       'menuContent': {
         templateUrl: 'templates/maglist.html',

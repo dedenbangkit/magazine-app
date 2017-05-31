@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['ui.router'])
+angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
 
 .controller('AppCtrl', function($scope, $timeout, $http, $state, $window, appService, StorageService) {
   // ApplicationData
@@ -98,6 +98,7 @@ angular.module('starter.controllers', ['ui.router'])
       .then(function(result) {
         $cordovaZip.unzip(targetPath, unzipPath).then(function () {
           // $scope.removeFile(fn);
+            alert('unzip success');
             $cordovaFile.checkDir(cordova.file.cacheDirectory, "contents/" + fn + "/")
                 .then(function (data) {
                   // alert(Object.keys(data));
@@ -129,10 +130,6 @@ angular.module('starter.controllers', ['ui.router'])
         });
       });
 
-      function goRead(x,y){
-        $state.go('maglists/:folderName/:magazineId',{ folderName: x, magazineId: y });
-      }
-
   };
 
   //Removing File
@@ -162,24 +159,28 @@ angular.module('starter.controllers', ['ui.router'])
   $cordovaPush
   ) {
   $scope.details = [];
-  $scope.id = $stateParams.folderName;
+  $scope.id = $stateParams.magazineId;
   $scope.issueName = $stateParams.issueName;
+  $scope.folderName = $stateParams.folderName;
+  alert($scope.id);
 
   // http://localhost:9000/issue/2/MagzApis/
 
-  // $http.get('http://192.168.1.10:9000/issue/'+ $stateParams.magazineId +'/MagzApis/')
-  //   .success(function(data, status, headers,config){
-  //     $scope.pages = _.map(data.results, function(it) {
-  //       it.html = htmlString(data.pageContent);
-  //       return it;
-  //     });
-  //   })
-  //   .error(function(data, status, headers,config){
-  //     console.log('data error');
-  //   })
-  //   .then(function(result){
-  //
-  //   });
+  $http.get('http://api-dev.publixx.id/issue/'+ $scope.id +'/MagzApis/')
+    .success(function(data, status, headers,config){
+      $scope.pages = _.map(data.results, function(thing) {
+        thing.html = data.pageContent;
+        return thing;
+      });
+
+      console.log(data)
+    })
+    .error(function(data, status, headers,config){
+      console.log('data error');
+    })
+    .then(function(result){
+
+    });
 
   var N = 10;
   // $scope.pages = Array.apply(null, {length: N}).map(Number.call, Number);
