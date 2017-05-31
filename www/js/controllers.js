@@ -88,8 +88,8 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
     // DownloadService.createFolder(fn);
 
     var url = zf;
-    var targetPath = cordova.file.cacheDirectory + "contents/" + fn + ".zip";
-    var unzipPath = cordova.file.cacheDirectory + "contents/" + fn + "/";
+    var targetPath = cordova.file.dataDirectory + "contents/" + fn + ".zip";
+    var unzipPath = cordova.file.dataDirectory + "contents/" + fn + "/";
     var trustHosts = true;
     var options = {};
     alert(targetPath);
@@ -99,7 +99,7 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
         $cordovaZip.unzip(targetPath, unzipPath).then(function () {
           // $scope.removeFile(fn);
             alert('unzip success');
-            $cordovaFile.checkDir(cordova.file.cacheDirectory, "contents/" + fn + "/")
+            $cordovaFile.checkDir(cordova.file.dataDirectory, "contents/" + fn + "/")
                 .then(function (data) {
                   // alert(Object.keys(data));
                   // alert(Object.keys(data.isFile));
@@ -134,7 +134,7 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
 
   //Removing File
   $scope.removeFile = function (fn) {
-    $cordovaFile.removeFile(cordova.file.cacheDirectory + "contents/", fn + ".zip")
+    $cordovaFile.removeFile(cordova.file.dataDirectory + "contents/", fn + ".zip")
       .then(function (success) {
         alert('file removed');
       }, function (error) {
@@ -155,29 +155,23 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
   $ionicScrollDelegate,
   $timeout,
   $ionicModal,
-  $cordovaFile,
-  $cordovaPush
+  $cordovaFile
   ) {
   $scope.details = [];
   $scope.id = $stateParams.magazineId;
   $scope.issueName = $stateParams.issueName;
   $scope.folderName = $stateParams.folderName;
-  alert($scope.id);
 
   // http://localhost:9000/issue/2/MagzApis/
 
   $http.get('http://api-dev.publixx.id/issue/'+ $scope.id +'/MagzApis/')
     .success(function(data, status, headers,config){
-      $scope.pages = _.map(data.results, function(thing) {
-
-        $http.get('http://api-dev.publixx.id/find/MagzApis/'+ thing.issueId +'/2JKDLFCUER')
-        .success(function(data){
-        thing.path = data.results.page_counter;
-        })
-        thing.html = data.pageContent;
+      var total = data.results.length;
+      $scope.pages = _.map(data.results, function(thing, total) {
+        thing.filePath = cordova.file.dataDirectory + "contents/" + $scope.folderName + "/" + (total+1) + ".html";
         return thing;
-        console.log(thing);
       });
+      console.log($scope.pages);
     })
     .error(function(data, status, headers,config){
       console.log('data error');
@@ -188,7 +182,7 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
 
   var N = 10;
   var pages = Array.apply(null, {length: N}).map(Number.call, Number);
-  // $scope.path = cordova.file.cacheDirectory + "contents/" + $stateParams.folderName + "/";
+  // $scope.path = cordova.file.dataDirectory + "contents/" + $stateParams.folderName + "/";
   console.log(pages);
 
   $scope.options = {
