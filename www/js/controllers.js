@@ -57,7 +57,7 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
   $cordovaZip,
   $timeout,
   $location,
-  lodash,
+  lodash
   ) {
   $http.get('appinfo.json').success(function(data){
     var project = data['project_id'];
@@ -169,11 +169,15 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
   $http.get('http://api-dev.publixx.id/issue/'+ $scope.id +'/MagzApis/')
     .success(function(data, status, headers,config){
       $scope.pages = _.map(data.results, function(thing) {
+
+        $http.get('http://api-dev.publixx.id/find/MagzApis/'+ thing.issueId +'/2JKDLFCUER')
+        .success(function(data){
+        thing.path = data.results.page_counter;
+        })
         thing.html = data.pageContent;
         return thing;
+        console.log(thing);
       });
-
-      console.log(data)
     })
     .error(function(data, status, headers,config){
       console.log('data error');
@@ -183,9 +187,9 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
     });
 
   var N = 10;
-  // $scope.pages = Array.apply(null, {length: N}).map(Number.call, Number);
+  var pages = Array.apply(null, {length: N}).map(Number.call, Number);
   // $scope.path = cordova.file.cacheDirectory + "contents/" + $stateParams.folderName + "/";
-  // alert($scope.path);
+  console.log(pages);
 
   $scope.options = {
             noSwiping: true,
