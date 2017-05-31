@@ -96,23 +96,8 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
     $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
       .then(function(result) {
         $cordovaZip.unzip(targetPath, unzipPath).then(function () {
-          // $scope.removeFile(fn);
+            $scope.removeFile(fn);
             alert('unzip success');
-            $cordovaFile.checkDir(cordova.file.cacheDirectory, "contents/" + fn + "/")
-                .then(function (data) {
-                  // alert(Object.keys(data));
-                  // alert(Object.keys(data.isFile));
-                  // alert(Object.keys(data.isDirectory));
-                  // alert(Object.keys(data.name[0]));
-                  // Object.keys(data.name).forEach(function (it) {
-                  //   alert(it);
-                  // });
-                  // var folders = Object.key(data.nativeURL);
-                  // isFile, isDirectory, name, fullPath, filesystem, nativeURL, constructor, createReader, getDirectory, removeRecursively, getFile, getMetadata,
-                  // setMetadata, moveTo, copyTo, toInternalURL, toURL, toNativeURL, toURI, remove, getParent,
-                  // for(var property in data.name) {
-                  //     alert(property);
-                });
           }, function () {
             console.log('error');
           }, function (progressEvent) {
@@ -161,11 +146,8 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
   $scope.issueName = $stateParams.issueName;
   $scope.folderName = $stateParams.folderName;
 
-  // http://localhost:9000/issue/2/MagzApis/
-
   $http.get('http://api-dev.publixx.id/issue/'+ $scope.id +'/MagzApis/')
     .success(function(data, status, headers,config){
-      var total = data.results.length;
       $scope.pages = _.map(data.results, function(thing, total) {
         thing.filePath = cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/" + (total+1) + ".html";
         return thing;
@@ -178,11 +160,6 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
     .then(function(result){
 
     });
-
-  var N = 10;
-  var pages = Array.apply(null, {length: N}).map(Number.call, Number);
-  // $scope.path = cordova.file.cacheDirectory + "contents/" + $stateParams.folderName + "/";
-  console.log(pages);
 
   $scope.options = {
             noSwiping: true,
