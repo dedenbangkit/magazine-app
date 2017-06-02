@@ -150,7 +150,7 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
     .success(function(data, status, headers,config){
       $scope.pages = _.map(data.results, function(thing, total) {
         thing.filePath = cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/" + (total+1) + ".html";
-        $http.get(thing.filePath).succes(function(data){
+        $http.get(thing.filePath).success(function(data){
           alert(data);  
         });
         return thing;
