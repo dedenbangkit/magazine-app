@@ -95,14 +95,9 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
 
     $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
       .then(function(result) {
-        $cordovaZip.unzip(targetPath, unzipPath).then(function () {
-            $scope.removeFile(fn);
-            alert('unzip success');
-          }, function () {
-            console.log('error');
-          }, function (progressEvent) {
-            console.log(progressEvent);
-          });
+        $cordovaZip.unzip(targetPath, unzipPath);
+        $scope.removeFile(fn);
+        document.getElementById('btn-'+fn).remove();
       }, function(err) {
         alert('download failed');
       }, function (progress) {
