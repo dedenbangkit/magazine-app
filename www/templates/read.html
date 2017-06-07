@@ -1,0 +1,23 @@
+<ion-view view-title="{{issueName}}">
+  <ion-content scroll="false">
+    <ion-slides slider="data.slider" options="options">
+      <ion-slide-page ng-repeat="page in pages" scroll="true">
+        <div ng-bind-html=page.pageContent></div>
+      </ion-slide-page>
+    </ion-slides>
+  </ion-content>
+</ion-view>
+
+<script>
+var otag = document.getElementsByTagName('o');
+while (otag[0]) otag[0].parentNode.removeChild(otag[0]);
+
+var phara = document.getElementsByTagName('p');
+while (phara[0]) phara[0].removeAttribute('contenteditable').removeAttribute('contenteditable').removeAttribute('data-selector');
+
+var divcol = document.getElementsByTagName('div');
+while (divcol[0]) divcol[0].removeAttribute('contenteditable').removeAttribute('contenteditable').removeAttribute('data-selector');
+
+var frames = document.getElementsByClassName('frameCover');
+while (frames[0]) frames[0].parentNode.removeChild(frames[0]);
+</script>

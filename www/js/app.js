@@ -30,34 +30,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngStora
       StatusBar.backgroundColorByName("black");
     }
 
-    // $rootScope.downloadDir = cordova.file.dataDirectory;
-    // // create Directory
-    //
-    // $cordovaFile.createDir(cordova.file.dataDirectory, "content", false)
-    //   .then(function (success) {
-    //     alert('magazine folder created');
-    //   }, function (error) {
-    //     alert('folder created');
-    //   });
-    //
-    // // File Transfer
-    //
-    // var url = "http://cdn.wall-pix.net/albums/art-space/00030109.jpg";
-    // var targetPath = cordova.file.dataDirectory + "/content/testImage.png";
-    // var trustHosts = true;
-    // var options = {};
-    //
-    // $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
-    //   .then(function(result) {
-    //     alert('file downloaded');
-    //   }, function(err) {
-    //     alert('file error');
-    //   }, function (progress) {
-    //     $timeout(function () {
-    //       $rootScope.downloadProgress = (progress.loaded / progress.total) * 100;
-    //     });
-    //   });
-
   });
 
 })
@@ -134,12 +106,22 @@ return {
     }
   })
 
-  .state('app.single', {
-    url: '/maglists/:folderName/:issueName/:magazineId',
+  .state('app.offline-read', {
+    url: '/offline/:folderName/:issueName/:magazineId/:totalPage',
     views: {
       'menuContent': {
-        templateUrl: 'templates/maglist.html',
-        controller: 'MaglistCtrl'
+        templateUrl: 'templates/read.html',
+        controller: 'OfflineCtrl'
+      }
+    }
+  })
+
+  .state('app.online-read', {
+    url: '/online/:folderName/:issueName/:magazineId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/read.html',
+        controller: 'OnlineCtrl'
       }
     }
   })

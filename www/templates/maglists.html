@@ -5,9 +5,10 @@
       <img ng-src="{{maglist.issueCover}}">
       <h2>{{maglist.issueName}}</h2>
       <p>Release date: {{maglist.releaseDate}}</p>
-      <a ng-switch-default class="button download-issue" href="#app/magon/{{maglist.folderName}}/{{maglist.issueName}}/{{maglist.magazineId}}">Read</a>
-      <a id="btn-{{maglist.folderName}}" class="button download-issue" ng-click="downloadContent(maglist.folderName, maglist.zipFile, maglist.index)">Download</button>
-      <a ng-switch-when="100" class="button download-issue" href="#app/maglists/{{maglist.folderName}}/{{maglist.issueName}}/{{maglist.magazineId}}">Read</a>
+      <p>Total page: {{maglist.totalPage}}</p>
+      <a ng-switch-default class="button download-issue" href="#app/online/{{maglist.folderName}}/{{maglist.issueName}}/{{maglist.magazineId}}">Read</a>
+      <a ng-switch-when="100" class="button download-issue" href="#app/offline/{{maglist.folderName}}/{{maglist.issueName}}/{{maglist.magazineId}}/{{maglist.totalPage}}">Read</a>
+      <button id="btn-{{maglist.folderName}}" class="button download-issue" ng-click="downloadContent(maglist.folderName, maglist.zipFile, maglist.index)">Download</button>
       <progress max="100" value="0" id="{{maglist.folderName}}"></progress>
       <p></p>
     </div>
