@@ -69,7 +69,7 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
       var project = data['project_id'];
       $http.get('http://api-dev.publixx.id/find/MagzApis/' + project + '/2JKDLFCUER')
         .success(function(data, status, headers, config) {
-          $scope.maglists = _.map(data.results, function(thing) {
+          $scope.maglists = _.map(data.results, function(thing, idx) {
             $http.get('http://api-dev.publixx.id/issue/' + thing.magazineId + '/MagzApis/')
               .success(function(data) {
                 $localStorage['issue-' + thing.magazineId] = data.results;
@@ -77,7 +77,7 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
               });
             thing.folderName = thing.zipFile.substring(thing.zipFile.lastIndexOf('/') + 1).slice(0, -4);
             thing.progress = 0;
-            thing.index = thing.magazineId - 1;
+            thing.index = idx;
             return thing;
           });
         })
