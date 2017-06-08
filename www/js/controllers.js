@@ -91,6 +91,8 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
         });
     });
 
+    alert($localStorage);
+
     $scope.goRead = function(folderName, issueName) {
       $location.path('#app/maglists/' + folderName + '/' + issueName);
     }
