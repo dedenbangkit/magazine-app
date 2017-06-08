@@ -205,6 +205,15 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
     $scope.issueName = $stateParams.issueName;
     $scope.folderName = $stateParams.folderName;
 
+    var contents = $localStorage['issue-' + $stateParams.magazineId];
+    var localAssets = cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/";
+
+    $scope.pages = _.map(contents, function(thing) {
+      var newHTML = $scope.pageContent.replace(/https:\/\/s3-ap-southeast-1.amazonaws.com\/publixx-statics\/images-lib\//g, localAssets);
+      thing.pageContent = newHTML;
+      return thing;
+    });
+
     $scope.pages = $localStorage['issue-' + $stateParams.magazineId];
     alert($scope.pages[1].pageContent);
 
