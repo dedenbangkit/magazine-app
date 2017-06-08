@@ -71,10 +71,10 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
         .success(function(data, status, headers, config) {
           $scope.maglists = _.map(data.results, function(thing) {
             $http.get('http://api-dev.publixx.id/issue/' + thing.magazineId + '/MagzApis/')
-            .success(function(data){
-              $localStorage['issue-' + thing.magazineId] = data.results;
-              thing.totalPage = data.results.length;
-            });
+              .success(function(data) {
+                $localStorage['issue-' + thing.magazineId] = data.results;
+                thing.totalPage = data.results.length;
+              });
             thing.folderName = thing.zipFile.substring(thing.zipFile.lastIndexOf('/') + 1).slice(0, -4);
             thing.progress = 0;
             thing.index = thing.magazineId - 1;
@@ -101,25 +101,26 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
       var jsonPath = unzipPath + "data_json.json";
       var trustHosts = true;
       var options = {};
-      alert(targetPath);
 
+      $scope.$watch('maglists[' + idx + '].progress', function() {});
       $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
         .then(function(result) {
-          $cordovaZip.unzip(targetPath, unzipPath);
-          $http.get(jsonPath).success(function(data){
-            var imageCount = 50 / data.length;
-            data.forEach(function(i,x) {
-              var imageName = unzipPath + i.substring(i.lastIndexOf('/') + 1).slice(0, -4);
-              $cordovaFileTransfer.download(i, imageName , options, trustHosts);
-              $scope.$watch('maglists[' + idx + '].progress', function() {});
-              $scope.maglists[idx].progress += imageCount; 
+          $cordovaZip.unzip(targetPath, unzipPath).then(function(){
+            $http.get(jsonPath).success(function(data) {
+              var imageDownload = 50 / data.length;
+              data.forEach(function(i, x) {
+                var imageName = unzipPath + i.substring(i.lastIndexOf('/') + 1).slice(0, -4);
+                $cordovaFileTransfer.download(i, imageName, options, trustHosts);
+                $scope.maglists[idx].progress += imageDownload;
+                document.getElementById(fn).value += imageDownload;
+              });
             });
           });
+
           $scope.removeFile(fn);
         }, function(err) {
           alert('download failed');
-        }, function(progress){
-          $scope.$watch('maglists[' + idx + '].progress', function() {});
+        }, function(progress) {
           progressBar = (progress.loaded / progress.total) * 50;
           document.getElementById(fn).value = progressBar;
           $scope.maglists[idx].progress = progressBar;
@@ -130,7 +131,6 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
     $scope.removeFile = function(fn) {
       $cordovaFile.removeFile(cordova.file.cacheDirectory + "contents/", fn + ".zip")
         .then(function(success) {
-          alert(fn + 'zip removed');
           document.getElementById('btn-' + fn).remove();
         }, function(error) {
           alert('file not removed');
@@ -206,7 +206,7 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
     $scope.folderName = $stateParams.folderName;
 
     $scope.pages = $localStorage['issue-' + $stateParams.magazineId];
-    alert ($scope.pages[1].pageContent);
+    alert($scope.pages[1].pageContent);
 
 
     // for (i=0; i<$stateParams.totalPage; i++){
