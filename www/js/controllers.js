@@ -109,7 +109,7 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
             $http.get(jsonPath).success(function(data) {
               var imageDownload = 50 / data.length;
               data.forEach(function(i, x) {
-                var imageName = unzipPath + i.substring(i.lastIndexOf('/') + 1).slice(0, -4);
+                var imageName = unzipPath + i.substring(i.lastIndexOf('/') + 1);
                 $cordovaFileTransfer.download(i, imageName, options, trustHosts);
                 $scope.maglists[idx].progress += imageDownload;
                 document.getElementById(fn).value += imageDownload;
