@@ -72,7 +72,7 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
           $scope.maglists = _.map(data.results, function(thing, idx) {
             $http.get('http://api-dev.publixx.id/issue/' + thing.magazineId + '/MagzApis/')
               .success(function(data) {
-                $localStorage['issue'][thing.magazineId] = data.results;
+                $localStorage['issue-' + thing.magazineId] = data.results;
                 thing.totalPage = data.results.length;
               });
             thing.folderName = thing.zipFile.substring(thing.zipFile.lastIndexOf('/') + 1).slice(0, -4);
@@ -91,7 +91,7 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
         });
     });
 
-    alert(JSON.stringfly($localStorage['issue']));
+    alert(JSON.stringfly($localStorage));
 
     $scope.goRead = function(folderName, issueName) {
       $location.path('#app/maglists/' + folderName + '/' + issueName);
@@ -207,7 +207,7 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
     $scope.issueName = $stateParams.issueName;
     $scope.folderName = $stateParams.folderName;
 
-    var olHTML = $localStorage['issue'][$stateParams.magazineId];
+    var olHTML = $localStorage['issue-' + $stateParams.magazineId];
     var localAssets = cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/";
 
     $scope.pages = _.map(olHTML, function(thing) {
@@ -216,7 +216,7 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
       return thing;
     });
 
-    $scope.pages = $localStorage['issue'][$stateParams.magazineId];
+    $scope.pages = $localStorage['issue-' + $stateParams.magazineId];
     alert($scope.pages[1].pageContent);
 
 
