@@ -12,6 +12,10 @@
   color:#FFF;
 }
 
+.item-input{
+  padding:10px;
+}
+
 .list-magazine{
   position: relative;
   padding-top: 0px;
