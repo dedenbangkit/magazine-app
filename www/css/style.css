@@ -213,6 +213,28 @@ progress[value="100"] {
   text-transform: capitalize;
 }
 
+.downloaded{
+  border-color: transparent;
+  background-color: #2c539e;
+  color: #FFF;
+  position: initial;
+  display: inline-block;
+  margin: 0;
+  padding: 0 12px;
+  min-width: 52px;
+  min-height: 20px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0px;
+  vertical-align: middle;
+  text-align: center;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  line-height: 25px;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
 .swiper-slide{
   height: auto;
   overflow-y: scroll;

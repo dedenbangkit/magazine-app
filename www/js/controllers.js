@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
+angular.module('starter.controllers', ['ionic','ui.router', 'ngSanitize'])
 
   .controller('AppCtrl', function($scope, $timeout, $http, $state, $window, appService, StorageService) {
     // ApplicationData
@@ -28,14 +28,14 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
     $scope.$watch('isLogged', function() {});
     console.log($scope.isLogged);
     $scope.loginData = {};
-    userLog = StorageService.getAll();
+    userLog = StorageService.getUser();
     $scope.user = userLog[0];
     $scope.$watch('user', function() {});
-    console.log(StorageService.getAll());
+    console.log(StorageService.getUser());
 
     // Perform the login action
     $scope.doLogin = function() {
-      StorageService.add({
+      StorageService.authUser({
         'username': $scope.loginData.username,
         'password': $scope.loginData.password
       });
@@ -63,23 +63,27 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
     $timeout,
     $location,
     $localStorage,
+    StorageService,
     lodash
   ) {
     $http.get('appinfo.json').success(function(data) {
       var project = data['project_id'];
       $http.get('http://api-dev.publixx.id/find/MagzApis/' + project + '/2JKDLFCUER')
         .success(function(data, status, headers, config) {
-          $scope.maglists = _.map(data.results, function(thing, idx) {
+          var maglists = _.map(data.results, function(thing, idx) {
+            thing.progress = StorageService.cacheIssue(idx);
+            console.log(thing.progress);
             $http.get('http://api-dev.publixx.id/issue/' + thing.magazineId + '/MagzApis/')
               .success(function(data) {
-                $localStorage['issue-' + thing.magazineId] = data.results;
+                $localStorage.content['issue-' + thing.magazineId] = data.results;
                 thing.totalPage = data.results.length;
               });
             thing.folderName = thing.zipFile.substring(thing.zipFile.lastIndexOf('/') + 1).slice(0, -4);
-            thing.progress = 0;
             thing.index = idx;
             return thing;
           });
+          $scope.maglists = maglists;
+          console.log($scope.maglists);
         })
         .error(function(data, status, headers, config) {
           console.log('data error');
@@ -90,13 +94,11 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
           // console.log(data.zipFile);
         });
     });
+    // var test = StorageService.getIssue(1);
+    // console.log(test[0][0]);
 
-    alert(JSON.stringfly($localStorage));
-
-    $scope.goRead = function(folderName, issueName) {
-      $location.path('#app/maglists/' + folderName + '/' + issueName);
-    }
     $scope.downloadContent = function(fn, zf, idx) {
+
       var url = zf;
       var targetPath = cordova.file.cacheDirectory + "contents/" + fn + ".zip";
       var unzipPath = cordova.file.cacheDirectory + "contents/" + fn + "/";
@@ -115,6 +117,8 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
                 $cordovaFileTransfer.download(i, imageName, options, trustHosts);
                 $scope.maglists[idx].progress += imageDownload;
                 document.getElementById(fn).value += imageDownload;
+                //save cache
+                StorageService.addMagazine(idx);
               });
             });
           });
@@ -161,7 +165,6 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
     $http.get('http://api-dev.publixx.id/issue/' + $scope.id + '/MagzApis/')
       .success(function(data, status, headers, config) {
         $scope.pages = data.results;
-        alert($scope.pages[1].pageContent);
       })
       .error(function(data, status, headers, config) {
         console.log('data error');
@@ -200,6 +203,7 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
     $ionicModal,
     $cordovaFile,
     $localStorage,
+    StorageService,
     lodash
   ) {
     $scope.details = [];
@@ -207,27 +211,13 @@ angular.module('starter.controllers', ['ui.router', 'ngSanitize'])
     $scope.issueName = $stateParams.issueName;
     $scope.folderName = $stateParams.folderName;
 
-    var olHTML = $localStorage['issue-' + $stateParams.magazineId];
+    var olHTML = $localStorage.content['issue-' + $stateParams.magazineId];
     var localAssets = cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/";
-
     $scope.pages = _.map(olHTML, function(thing) {
       var newHTML = thing.pageContent.replace(/https:\/\/s3-ap-southeast-1.amazonaws.com\/publixx-statics\/images-lib\//g, localAssets);
       thing.pageContent = newHTML;
       return thing;
     });
-
-    $scope.pages = $localStorage['issue-' + $stateParams.magazineId];
-    alert($scope.pages[1].pageContent);
-
-
-    // for (i=0; i<$stateParams.totalPage; i++){
-    //   var filePath = cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/" + (i + 1) + ".html";
-    //   $http.get(filePath).success(function(data){
-    //     $scope.pages.push({'pageContent' : data});
-    //   })
-    // };
-
-    // alert($scope.pages[1].pageContent);
 
     $scope.options = {
       noSwiping: true,

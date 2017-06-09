@@ -54,33 +54,51 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngStora
 
 .factory ('StorageService', function ($localStorage, $window, $state) {
 $localStorage = $localStorage.$default({
-  things: [],
-  status: '0'
+  login: [],
+  status: '0',
+  content: [],
+  magazine: [],
+  issue: [],
 });
 var _getStatus = function() {
   return $localStorage.status;
 }
-
 var _changeStatus = function(thing) {
   $localStorage.status = thing;
   return $localStorage.status;
 }
+var _auth = function(it) {
+  $localStorage.login.push(it);
+}
+var _getUser = function(){
+  return $localStorage.login;
+}
 
-var _getAll = function () {
-  return $localStorage.things;
-}
-var _add = function (thing) {
-  $localStorage.things.push(thing);
-}
-var _remove = function (thing) {
+var _logout = function (thing) {
   $localStorage.things.splice($localStorage.things.indexOf(thing), 1);
 }
+var _getMagazine = function () {
+  return $localStorage.magazine;
+}
+var _addMagazine = function (it) {
+  $localStorage.magazine.indexOf(it) === -1 ? $localStorage.magazine.push(it) : console.log('downloaded');
+}
+var _cacheIssue = function (it) {
+  return $localStorage.magazine.indexOf(it) === -1 ? 0 : 100;
+}
+var _getIssue = function(it) {
+  return $localStorage.issue['mag'+it];
+}
 return {
-    changeStatus: _changeStatus,
     getStatus: _getStatus,
-    getAll: _getAll,
-    add: _add,
-    remove: _remove
+    changeStatus: _changeStatus,
+    authUser: _auth,
+    getUser: _getUser,
+    logOut: _logout,
+    getMagazine: _getMagazine,
+    addMagazine: _addMagazine,
+    cacheIssue: _cacheIssue,
+    getIssue: _getIssue,
   };
 })
 
