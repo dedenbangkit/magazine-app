@@ -117,7 +117,6 @@ angular.module('starter.controllers', ['ionic','ui.router', 'ngSanitize'])
                 $cordovaFileTransfer.download(i, imageName, options, trustHosts);
                 $scope.maglists[idx].progress += imageDownload;
                 document.getElementById(fn).value += imageDownload;
-                //save cache
                 StorageService.addMagazine(idx);
               });
             });
