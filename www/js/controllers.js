@@ -68,6 +68,7 @@ angular.module('starter.controllers', ['ionic','ui.router', 'ngSanitize'])
   ) {
     $http.get('appinfo.json').success(function(data) {
       var project = data['project_id'];
+      var dev_id = data['dev_id'];
       $http.get('http://api-dev.publixx.id/find/MagzApis/' + project + '/2JKDLFCUER')
         .success(function(data, status, headers, config) {
           var maglists = _.map(data.results, function(thing, idx) {
@@ -191,7 +192,7 @@ angular.module('starter.controllers', ['ionic','ui.router', 'ngSanitize'])
 
   })
 
-  //Read Page Online
+  //Read Page Offline
   .controller('OfflineCtrl', function(
     $scope,
     $http,
