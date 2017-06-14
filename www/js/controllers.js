@@ -1,6 +1,14 @@
-angular.module('starter.controllers', ['ionic','ui.router', 'ngSanitize'])
+angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
 
-  .controller('AppCtrl', function($scope, $timeout, $http, $state, $window, appService, StorageService) {
+  .controller('AppCtrl', function(
+    $scope,
+    $timeout,
+    $http,
+    $state,
+    $window,
+    appService,
+    StorageService
+  ) {
     // ApplicationData
     appService.async().then(function(response) {
       $scope.company = response;
@@ -55,6 +63,9 @@ angular.module('starter.controllers', ['ionic','ui.router', 'ngSanitize'])
 
   .controller('MaglistsCtrl', function(
     $scope,
+    $ionicPlatform,
+    $ionicLoading,
+    $ionicPopup,
     $http,
     $cordovaProgress,
     $cordovaFile,
@@ -64,41 +75,58 @@ angular.module('starter.controllers', ['ionic','ui.router', 'ngSanitize'])
     $location,
     $localStorage,
     StorageService,
-    lodash
+    lodash,
   ) {
-    $http.get('appinfo.json').success(function(data) {
-      var project = data['project_id'];
-      var dev_id = data['dev_id'];
-      $http.get('http://api-dev.publixx.id/find/MagzApis/' + project + '/2JKDLFCUER')
-        .success(function(data, status, headers, config) {
-          var maglists = _.map(data.results, function(thing, idx) {
-            thing.progress = StorageService.cacheIssue(idx);
-            console.log(thing.progress);
-            $http.get('http://api-dev.publixx.id/issue/' + thing.magazineId + '/MagzApis/')
-              .success(function(data) {
-                $localStorage.content['issue-' + thing.magazineId] = data.results;
-                thing.totalPage = data.results.length;
-              });
-            thing.folderName = thing.zipFile.substring(thing.zipFile.lastIndexOf('/') + 1).slice(0, -4);
-            thing.index = idx;
-            return thing;
-          });
-          $scope.maglists = maglists;
-          console.log($scope.maglists);
-        })
-        .error(function(data, status, headers, config) {
-          console.log('data error');
-        })
-        .then(function(result) {
-          // data = result.data.results[0];
-          // $scope.folderName = data.zipFile.substring(data.zipFile.lastIndexOf('/')+1).slice(0,-4);
-          // console.log(data.zipFile);
-        });
+
+    $ionicLoading.show({
+      template: spinner + 'Loading Magazine...',
+      animation: 'fade-in',
+      showBackdrop: true,
+      maxWidth: 200,
+      showDelay: 0
     });
+
+    $ionicLoading.show({
+
+    });
+
+    $timeout(function() {
+
+      $http.get('appinfo.json').success(function(data) {
+        var project = data['project_id'];
+        $http.get('http://api-dev.publixx.id/find/MagzApis/' + project + '/2JKDLFCUER')
+          .success(function(data, status, headers, config) {
+            var maglists = _.map(data.results, function(thing, idx) {
+              thing.progress = StorageService.cacheIssue(idx);
+              console.log(idx);
+              $http.get('http://api-dev.publixx.id/issue/' + thing.magazineId + '/MagzApis/')
+                .success(function(data) {
+                  $localStorage.content['issue-' + thing.magazineId] = data.results;
+                  thing.totalPage = data.results.length;
+                });
+              thing.folderName = thing.zipFile.substring(thing.zipFile.lastIndexOf('/') + 1).slice(0, -4);
+              thing.index = idx;
+              return thing;
+            });
+            $scope.maglists = maglists;
+            console.log($scope.maglists);
+          })
+          .error(function(data, status, headers, config) {
+            console.log('data error');
+          })
+          .then(function(result) {
+            // data = result.data.results[0];
+            // $scope.folderName = data.zipFile.substring(data.zipFile.lastIndexOf('/')+1).slice(0,-4);
+            // console.log(data.zipFile);
+          });
+      });
+
+      $ionicLoading.hide();
+    }, 2000);
     // var test = StorageService.getIssue(1);
     // console.log(test[0][0]);
 
-    $scope.downloadContent = function(fn, zf, idx) {
+    $scope.downloadContent = function(fn, zf, idx, iName) {
 
       var url = zf;
       var targetPath = cordova.file.cacheDirectory + "contents/" + fn + ".zip";
@@ -107,30 +135,41 @@ angular.module('starter.controllers', ['ionic','ui.router', 'ngSanitize'])
       var trustHosts = true;
       var options = {};
 
-      $scope.$watch('maglists[' + idx + '].progress', function() {});
-      $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
-        .then(function(result) {
-          $cordovaZip.unzip(targetPath, unzipPath).then(function(){
-            $http.get(jsonPath).success(function(data) {
-              var imageDownload = 50 / data.length;
-              data.forEach(function(i, x) {
-                var imageName = unzipPath + i.substring(i.lastIndexOf('/') + 1);
-                $cordovaFileTransfer.download(i, imageName, options, trustHosts);
-                $scope.maglists[idx].progress += imageDownload;
-                document.getElementById(fn).value += imageDownload;
-                StorageService.addMagazine(idx);
-              });
-            });
-          });
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Download Offline',
+        template: '<center>Are you sure you want to download ' + iName + '?</center>'
+      });
 
-          $scope.removeFile(fn);
-        }, function(err) {
-          alert('download failed');
-        }, function(progress) {
-          progressBar = (progress.loaded / progress.total) * 50;
-          document.getElementById(fn).value = progressBar;
-          $scope.maglists[idx].progress = progressBar;
-        });
+      confirmPopup.then(function(res) {
+        if (res) {
+          $scope.$watch('maglists[' + idx + '].progress', function() {});
+          $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
+            .then(function(result) {
+              $cordovaZip.unzip(targetPath, unzipPath).then(function() {
+                $http.get(jsonPath).success(function(data) {
+                  var imageDownload = 50 / data.length;
+                  data.forEach(function(i, x) {
+                    var imageName = unzipPath + i.substring(i.lastIndexOf('/') + 1);
+                    $cordovaFileTransfer.download(i, imageName, options, trustHosts);
+                    $scope.maglists[idx].progress += imageDownload;
+                    document.getElementById(fn).value += imageDownload;
+                    StorageService.addMagazine(idx);
+                  });
+                });
+              });
+
+              $scope.removeFile(fn);
+            }, function(err) {
+              alert('download failed');
+            }, function(progress) {
+              progressBar = (progress.loaded / progress.total) * 50;
+              document.getElementById(fn).value = progressBar;
+              $scope.maglists[idx].progress = progressBar;
+            });
+
+        }
+      });
+
     };
 
     //Removing File
@@ -140,6 +179,83 @@ angular.module('starter.controllers', ['ionic','ui.router', 'ngSanitize'])
           document.getElementById('btn-' + fn).remove();
         }, function(error) {
           alert('file not removed');
+        });
+    };
+
+    //In App Purchase
+
+    var productIds = ['com.publixx.magazineapp.5']; // <- Add your product Ids here
+    var spinner = '<ion-spinner icon="dots" class="spinner-stable"></ion-spinner><br/>';
+
+    $scope.loadProducts = function() {
+      $ionicLoading.show({
+        template: spinner + 'Loading Products...'
+      });
+      inAppPurchase
+        .getProducts(productIds)
+        .then(function(products) {
+          $ionicLoading.hide();
+          $scope.products = products;
+          // returnnya productId,title,price
+        })
+        .catch(function(err) {
+          $ionicLoading.hide();
+          console.log(err);
+        });
+    };
+
+    $scope.buy = function(productId) {
+
+      $ionicLoading.show({
+        template: spinner + 'Purchasing...'
+      });
+      inAppPurchase
+        .buy(productId)
+        .then(function(data) {
+          console.log(JSON.stringify(data));
+          console.log('consuming transactionId: ' + data.transactionId);
+          return inAppPurchase.consume(data.type, data.receipt, data.signature);
+        })
+        .then(function() {
+          var alertPopup = $ionicPopup.alert({
+            title: 'Purchase was successful!',
+            template: 'Check your console log for the transaction data'
+          });
+          console.log('consume done!');
+          $ionicLoading.hide();
+        })
+        .catch(function(err) {
+          $ionicLoading.hide();
+          console.log(err);
+          $ionicPopup.alert({
+            title: 'Something went wrong',
+            template: 'Check your console log for the error details'
+          });
+        });
+
+    };
+
+    $scope.restore = function() {
+      $ionicLoading.show({
+        template: spinner + 'Restoring Purchases...'
+      });
+      inAppPurchase
+        .restorePurchases()
+        .then(function(purchases) {
+          $ionicLoading.hide();
+          console.log(JSON.stringify(purchases));
+          $ionicPopup.alert({
+            title: 'Restore was successful!',
+            template: 'Check your console log for the restored purchases data'
+          });
+        })
+        .catch(function(err) {
+          $ionicLoading.hide();
+          console.log(err);
+          $ionicPopup.alert({
+            title: 'Something went wrong',
+            template: 'Check your console log for the error details'
+          });
         });
     };
 
@@ -155,7 +271,7 @@ angular.module('starter.controllers', ['ionic','ui.router', 'ngSanitize'])
     $ionicScrollDelegate,
     $timeout,
     $ionicModal,
-    $cordovaFile
+    $cordovaFile,
   ) {
     $scope.details = [];
     $scope.id = $stateParams.magazineId;
@@ -192,7 +308,7 @@ angular.module('starter.controllers', ['ionic','ui.router', 'ngSanitize'])
 
   })
 
-  //Read Page Offline
+  //Read Page Online
   .controller('OfflineCtrl', function(
     $scope,
     $http,

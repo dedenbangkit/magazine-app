@@ -125,7 +125,7 @@ return {
   })
 
   .state('app.offline-read', {
-    url: '/offline-read/:folderName/:issueName/:magazineId',
+    url: '/offline/:folderName/:issueName/:magazineId/:totalPage',
     views: {
       'menuContent': {
         templateUrl: 'templates/read.html',
@@ -135,7 +135,7 @@ return {
   })
 
   .state('app.online-read', {
-    url: '/online-read/:folderName/:issueName/:magazineId',
+    url: '/online/:folderName/:issueName/:magazineId',
     views: {
       'menuContent': {
         templateUrl: 'templates/read.html',
