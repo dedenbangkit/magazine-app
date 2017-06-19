@@ -124,13 +124,13 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
               return thing;
             });
             StorageService.saveList(maglists);
-            console.log(promiseDownload);
             $q.all(promiseDownload).finally(function(){
               $scope.maglists = StorageService.getList();
             });
           })
           .error(function(data, status, headers, config) {
             $scope.maglists = StorageService.getList();
+            console.log($localStorage.content);
           })
       });
 
@@ -357,24 +357,24 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
       return thing;
     });
 
-    $scope.options = {
-      noSwiping: true,
-      noSwipingClass: 'do_not_swipe',
-      watchSlidesVisibility: true,
-      pagination: false,
-    };
-
-    $ionicSideMenuDelegate.canDragContent(false)
-    $ionicModal.fromTemplateUrl('templates/modal.html', {
-      scope: $scope,
-      animation: 'jelly'
-    }).then(function(modal) {
-      $scope.modal = modal;
-    });
-
-    $scope.openModal = function() {
-      $scope.modal.show()
-      $scope.imgUrl = "http://placekitten.com/g/500/800";
-    }
+    // $scope.options = {
+    //   noSwiping: true,
+    //   noSwipingClass: 'do_not_swipe',
+    //   watchSlidesVisibility: true,
+    //   pagination: false,
+    // };
+    //
+    // $ionicSideMenuDelegate.canDragContent(false)
+    // $ionicModal.fromTemplateUrl('templates/modal.html', {
+    //   scope: $scope,
+    //   animation: 'jelly'
+    // }).then(function(modal) {
+    //   $scope.modal = modal;
+    // });
+    //
+    // $scope.openModal = function() {
+    //   $scope.modal.show()
+    //   $scope.imgUrl = "http://placekitten.com/g/500/800";
+    // }
 
   })
