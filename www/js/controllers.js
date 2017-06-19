@@ -338,7 +338,6 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
   //Read Page Online
   .controller('OfflineCtrl', function(
     $scope,
-    $http,
     $stateParams,
     $ionicSideMenuDelegate,
     $ionicScrollDelegate,
@@ -356,6 +355,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
 
     // var olHTML = $localStorage.content['issue-' + $stateParams.magazineId];
     var olHTML = StorageService.getHtml($stateParams.magazineId);
+    alert(olHTML);
     var localAssets = cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/";
     $scope.pages = _.map(olHTML, function(thing) {
       var newHTML = thing.pageContent.replace(/https:\/\/s3-ap-southeast-1.amazonaws.com\/publixx-statics\/images-lib\//g, localAssets);
