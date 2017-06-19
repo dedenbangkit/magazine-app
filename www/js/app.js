@@ -99,6 +99,12 @@ var _cacheIssue = function (it) {
 var _getIssue = function(it) {
   return $localStorage.issue['mag'+it];
 }
+
+var _clearCache = function(){
+  $localStorage.issue = [];
+  $localStorage.magazine = [];
+}
+
 return {
     getStatus: _getStatus,
     changeStatus: _changeStatus,
@@ -111,6 +117,7 @@ return {
     addMagazine: _addMagazine,
     cacheIssue: _cacheIssue,
     getIssue: _getIssue,
+    clearCache: _clearCache,
   };
 })
 

@@ -6,6 +6,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     $http,
     $state,
     $window,
+    $ionicPopup,
     appService,
     StorageService
   ) {
@@ -55,6 +56,16 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
       // $window.location.reload(true);
       // $state.go('app.settings');
     };
+
+    $scope.clearCache = function(){
+      var clearAllData = $ionicPopup.confirm({
+        title: 'Clear Cache',
+        template: '<center>Are you sure you want to remove all Storage Data?</center>'
+      });
+      clearAllData.then(function(res) {
+        StorageService.clearCache;
+      });
+    };
   })
 
   .controller('SettingsCtrl', function($scope) {
@@ -74,9 +85,13 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     $timeout,
     $location,
     $localStorage,
+    $q,
     StorageService,
     lodash,
   ) {
+
+
+    var spinner = '<ion-spinner icon="dots" class="spinner-stable"></ion-spinner><br/>';
 
     $ionicLoading.show({
       template: spinner + 'Loading Magazine...',
@@ -86,13 +101,10 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
       showDelay: 0
     });
 
-    $ionicLoading.show({
-
-    });
-
     $timeout(function() {
 
       $http.get('appinfo.json').success(function(data) {
+        var promiseDownload = [];
         var project = data['project_id'];
         $http.get('http://api-dev.publixx.id/find/MagzApis/' + project + '/2JKDLFCUER')
           .success(function(data, status, headers, config) {
@@ -106,23 +118,28 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
                 });
               var coverImage = thing.issueCover.substring(thing.issueCover.lastIndexOf('/') + 1);
               thing.coverPath = cordova.file.cacheDirectory + "contents/covers/" + coverImage;
-              $cordovaFileTransfer.download(thing.issueCover, thing.coverPath, {}, true);
+              promiseDownload.push($cordovaFileTransfer.download(thing.issueCover, thing.coverPath, {}, true));
               thing.folderName = thing.zipFile.substring(thing.zipFile.lastIndexOf('/') + 1).slice(0, -4);
               thing.index = idx;
               return thing;
             });
             StorageService.saveList(maglists);
+            console.log(promiseDownload);
+            $q.all(promiseDownload).finally(function(){
+              $scope.maglists = StorageService.getList();
+            });
           })
           .error(function(data, status, headers, config) {
-            $scope.maglists = StorageService.getList();
-          })
-          .then(function(data){
             $scope.maglists = StorageService.getList();
           })
       });
 
       $ionicLoading.hide();
     }, 2000);
+
+    $scope.doRefresh = function(){
+      alert('refresh');
+    }
     // var test = StorageService.getIssue(1);
     // console.log(test[0][0]);
 
@@ -160,7 +177,13 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
 
               $scope.removeFile(fn);
             }, function(err) {
-              alert('download failed');
+                 var alertPopup = $ionicPopup.alert({
+                   title: 'Download Failed',
+                   template: '<center>Please connect through the Internet to Download this Issue</center>'
+                 });
+                 alertPopup.then(function(res) {
+                   console.log('Download Failed');
+                 });
             }, function(progress) {
               progressBar = (progress.loaded / progress.total) * 50;
               document.getElementById(fn).value = progressBar;
@@ -185,7 +208,6 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     //In App Purchase
 
     var productIds = ['com.publixx.magazineapp.5']; // <- Add your product Ids here
-    var spinner = '<ion-spinner icon="dots" class="spinner-stable"></ion-spinner><br/>';
 
     $scope.loadProducts = function() {
       $ionicLoading.show({
