@@ -116,6 +116,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
               $http.get('http://api-dev.publixx.id/issue/' + thing.magazineId + '/MagzApis/')
                 .success(function(data) {
                   $localStorage.content['issue-' + thing.magazineId] = data.results;
+                  StorageService.cacheHtml(thing.magazineId,data.results);
                   thing.totalPage = data.results.length;
                 });
               var coverImage = thing.issueCover.substring(thing.issueCover.lastIndexOf('/') + 1);
@@ -296,6 +297,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     $timeout,
     $ionicModal,
     $cordovaFile,
+    StorageService,
   ) {
     $scope.details = [];
     $scope.id = $stateParams.magazineId;
@@ -350,17 +352,15 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     $scope.id = $stateParams.magazineId;
     $scope.issueName = $stateParams.issueName;
     $scope.folderName = $stateParams.folderName;
-    alert($scope.id+'<br>'+$scope.issueName+'<br>'+$scope.folderName+'<br>');
 
-    var olHTML = $localStorage.content['issue-' + $stateParams.magazineId];
+    // var olHTML = $localStorage.content['issue-' + $stateParams.magazineId];
+    var olHTML = StorageService.getHtml($stateParams.magazineId);
     var localAssets = cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/";
     $scope.pages = _.map(olHTML, function(thing) {
       var newHTML = thing.pageContent.replace(/https:\/\/s3-ap-southeast-1.amazonaws.com\/publixx-statics\/images-lib\//g, localAssets);
       thing.pageContent = newHTML;
       return thing;
     });
-
-    alert($scope.pages);
 
     $scope.options = {
       noSwiping: true,

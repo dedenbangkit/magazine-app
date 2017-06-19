@@ -60,6 +60,7 @@ $localStorage = $localStorage.$default({
   content: [],
   magazine: [],
   issue: [],
+  html: [],
 });
 var _getStatus = function() {
   return $localStorage.status;
@@ -100,6 +101,14 @@ var _getIssue = function(it) {
   return $localStorage.issue['mag'+it];
 }
 
+var _cacheHtml = function(it, comes) {
+  $localStorage.html[it] === -1 ? $localStorage.html[it] = comes : console.log($localStorage.html.it);
+}
+
+var _getHtml = function(it){
+  return $localStorage.html[it];
+}
+
 var _clearCache = function(){
   $localStorage.issue = [];
   $localStorage.magazine = [];
@@ -117,6 +126,8 @@ return {
     addMagazine: _addMagazine,
     cacheIssue: _cacheIssue,
     getIssue: _getIssue,
+    cacheHtml: _cacheHtml,
+    getHtml: _getHtml,
     clearCache: _clearCache,
   };
 })
