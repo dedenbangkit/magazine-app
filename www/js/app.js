@@ -102,11 +102,11 @@ var _getIssue = function(it) {
 }
 
 var _cacheHtml = function(it, comes) {
-  $localStorage.html[it] === -1 ? $localStorage.html[it] = comes : console.log($localStorage.html.it);
+  $localStorage.html.indexOf('mag-'+it) === -1 ? $localStorage.html['mag-'+it] = comes : console.log($localStorage.html.it);
 }
 
 var _getHtml = function(it){
-  return $localStorage.html[it];
+  return $localStorage.html['mag-'+it];
 }
 
 var _clearCache = function(){

@@ -304,6 +304,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     $scope.issueName = $stateParams.issueName;
     $scope.folderName = $stateParams.folderName;
 
+
     $http.get('http://api-dev.publixx.id/issue/' + $scope.id + '/MagzApis/')
       .success(function(data, status, headers, config) {
         $scope.pages = data.results;
