@@ -158,7 +158,7 @@ return {
     url: '/offline/:folderName/:issueName/:magazineId',
     views: {
       'menuContent': {
-        templateUrl: 'templates/read.html',
+        templateUrl: 'templates/offline.html',
         controller: 'OfflineCtrl'
       }
     }

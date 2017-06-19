@@ -6,6 +6,7 @@
         <h2>{{maglist.issueName}}</h2>
         <p>Release date: {{maglist.releaseDate}}</p>
         <a ng-if="maglist.progress === 100" class="button downloaded" href="#app/offline/{{maglist.folderName}}/{{maglist.issueName}}/{{maglist.magazineId}}">Read</a>
+        <a ng-if="maglist.progress === 0" class="button download-issue" href="#app/online/{{maglist.folderName}}/{{maglist.issueName}}/{{maglist.magazineId}}">Read</a>
         <button ng-if="maglist.progress === 0" id="btn-{{maglist.folderName}}" class="button download-issue" ng-click="downloadContent(maglist.folderName, maglist.zipFile, maglist.index, maglist.issueName)">Download</button>
         <p ng-if="maglist.progress > 0 && maglist.progress < 100">Downloading...</p>
         <progress max="100" value="0" id="{{maglist.folderName}}"></progress>
