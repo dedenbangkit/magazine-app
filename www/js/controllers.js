@@ -354,7 +354,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     $scope.folderName = $stateParams.folderName;
 
     // var olHTML = $localStorage.content['issue-' + $stateParams.magazineId];
-    var olHTML = StorageService.getHtml($stateParams.magazineId);
+    var olHTML = StorageService.getHtml($scope.id);
     alert(olHTML);
     var localAssets = cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/";
     $scope.pages = _.map(olHTML, function(thing) {
