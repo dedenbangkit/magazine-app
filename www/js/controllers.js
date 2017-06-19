@@ -104,6 +104,9 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
                   $localStorage.content['issue-' + thing.magazineId] = data.results;
                   thing.totalPage = data.results.length;
                 });
+              var coverImage = thing.issueCover.substring(thing.issueCover.lastIndexOf('/') + 1);
+              thing.coverPath = cordova.file.cacheDirectory + "contents/covers/" + coverImage;
+              $cordovaFileTransfer.download(thing.issueCover, thing.coverPath, {}, true);
               thing.folderName = thing.zipFile.substring(thing.zipFile.lastIndexOf('/') + 1).slice(0, -4);
               thing.index = idx;
               return thing;

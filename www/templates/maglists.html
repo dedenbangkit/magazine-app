@@ -1,23 +1,9 @@
 <ion-view view-title="All Issues">
   <ion-content>
 
-    <div ng-repeat="product in products" class="list-magazine">
-      <div class="item item-thumbnail-left">
-        <img ng-src="{{product.issueCover}}">
-        <h2>{{product.title}}</h2>
-        <p>Release date: {{product.releaseDate}}</p>
-        <p>Price: {{product.price}}</p>
-        <a ng-if="product.progress === 100" class="button downloaded" href="#app/offline/{{product.folderName}}/{{product.issueName}}/{{product.magazineId}}/{{product.totalPage}}">Read</a>
-        <button ng-if="product.progress === 0" id="btn-{{product.folderName}}" class="button download-issue" ng-click="downloadContent(product.folderName, product.zipFile, product.index, product.issueName)">Buy</button>
-        <p ng-if="product.progress > 0 && product.progress < 100">Downloading...</p>
-        <progress max="100" value="0" id="{{product.folderName}}"></progress>
-        <p></p>
-      </div>
-    </div>
-
     <div ng-repeat="maglist in maglists" class="list-magazine">
       <div class="item item-thumbnail-left">
-        <img ng-src="{{maglist.issueCover}}">
+        <img ng-src="{{maglist.coverPath}}">
         <h2>{{maglist.issueName}}</h2>
         <p>Release date: {{maglist.releaseDate}}</p>
         <a ng-if="maglist.progress === 0" class="button download-issue" href="#app/online/{{maglist.folderName}}/{{maglist.issueName}}/{{maglist.magazineId}}">Read</a>
