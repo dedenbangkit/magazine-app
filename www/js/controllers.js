@@ -110,6 +110,8 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
           .success(function(data, status, headers, config) {
             var maglists = _.map(data.results, function(thing, idx) {
               thing.progress = StorageService.cacheIssue(idx);
+              thing.magazineId = thing.magazineId;
+              thing.issueName = thing.issueName;
               console.log(idx);
               $http.get('http://api-dev.publixx.id/issue/' + thing.magazineId + '/MagzApis/')
                 .success(function(data) {
@@ -357,24 +359,24 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
       return thing;
     });
 
-    // $scope.options = {
-    //   noSwiping: true,
-    //   noSwipingClass: 'do_not_swipe',
-    //   watchSlidesVisibility: true,
-    //   pagination: false,
-    // };
-    //
-    // $ionicSideMenuDelegate.canDragContent(false)
-    // $ionicModal.fromTemplateUrl('templates/modal.html', {
-    //   scope: $scope,
-    //   animation: 'jelly'
-    // }).then(function(modal) {
-    //   $scope.modal = modal;
-    // });
-    //
-    // $scope.openModal = function() {
-    //   $scope.modal.show()
-    //   $scope.imgUrl = "http://placekitten.com/g/500/800";
-    // }
+    $scope.options = {
+      noSwiping: true,
+      noSwipingClass: 'do_not_swipe',
+      watchSlidesVisibility: true,
+      pagination: false,
+    };
+
+    $ionicSideMenuDelegate.canDragContent(false)
+    $ionicModal.fromTemplateUrl('templates/modal.html', {
+      scope: $scope,
+      animation: 'jelly'
+    }).then(function(modal) {
+      $scope.modal = modal;
+    });
+
+    $scope.openModal = function() {
+      $scope.modal.show()
+      $scope.imgUrl = "http://placekitten.com/g/500/800";
+    }
 
   })

@@ -144,7 +144,7 @@ return {
   })
 
   .state('app.offline-read', {
-    url: '/offline/:folderName/:issueName/:magazineId/:totalPage',
+    url: '/offline/:folderName/:issueName/:magazineId',
     views: {
       'menuContent': {
         templateUrl: 'templates/read.html',
