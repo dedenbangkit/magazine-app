@@ -350,6 +350,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     $scope.id = $stateParams.magazineId;
     $scope.issueName = $stateParams.issueName;
     $scope.folderName = $stateParams.folderName;
+    alert($scope.id+'<br>'+$scope.issueName+'<br>'+$scope.folderName+'<br>');
 
     var olHTML = $localStorage.content['issue-' + $stateParams.magazineId];
     var localAssets = cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/";
@@ -358,6 +359,8 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
       thing.pageContent = newHTML;
       return thing;
     });
+
+    alert($scope.pages);
 
     $scope.options = {
       noSwiping: true,
