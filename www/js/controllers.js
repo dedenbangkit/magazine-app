@@ -108,17 +108,14 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
               thing.index = idx;
               return thing;
             });
-            $scope.maglists = maglists;
-            console.log($scope.maglists);
+            StorageService.saveList(maglists);
           })
           .error(function(data, status, headers, config) {
-            console.log('data error');
+            console.log("error");
           })
-          .then(function(result) {
-            // data = result.data.results[0];
-            // $scope.folderName = data.zipFile.substring(data.zipFile.lastIndexOf('/')+1).slice(0,-4);
-            // console.log(data.zipFile);
-          });
+          .then(function(data){
+            $scope.maglists = StorageService.getList();
+          })
       });
 
       $ionicLoading.hide();

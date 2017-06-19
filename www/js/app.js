@@ -56,6 +56,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngStora
 $localStorage = $localStorage.$default({
   login: [],
   status: '0',
+  magList: [],
   content: [],
   magazine: [],
   issue: [],
@@ -77,6 +78,15 @@ var _getUser = function(){
 var _logout = function (thing) {
   $localStorage.things.splice($localStorage.things.indexOf(thing), 1);
 }
+
+var _saveList = function (thing) {
+  $localStorage.magList = thing;
+}
+
+var _getList = function (){
+  return $localStorage.magList;
+}
+
 var _getMagazine = function () {
   return $localStorage.magazine;
 }
@@ -95,6 +105,8 @@ return {
     authUser: _auth,
     getUser: _getUser,
     logOut: _logout,
+    saveList: _saveList,
+    getList: _getList,
     getMagazine: _getMagazine,
     addMagazine: _addMagazine,
     cacheIssue: _cacheIssue,
