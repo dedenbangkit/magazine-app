@@ -109,11 +109,9 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
               return thing;
             });
             StorageService.saveList(maglists);
+            $scope.maglists = StorageService.getList();
           })
           .error(function(data, status, headers, config) {
-            console.log("error");
-          })
-          .then(function(data){
             $scope.maglists = StorageService.getList();
           })
       });
