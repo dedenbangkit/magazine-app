@@ -303,11 +303,6 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     $scope.issueName = $stateParams.issueName;
     $scope.folderName = $stateParams.folderName;
 
-    $http.get(cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/1.html")
-      .success(function(data, status, headers, config) {
-        alert(data);
-      })
-
     $http.get('http://api-dev.publixx.id/issue/' + $scope.id + '/MagzApis/')
       .success(function(data, status, headers, config) {
         $scope.pages = data.results;
@@ -356,13 +351,8 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     $scope.issueName = $stateParams.issueName;
     $scope.folderName = $stateParams.folderName;
 
-    $http.get(cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/1.html")
-      .success(function(data, status, headers, config) {
-        alert(data);
-    });
-
-    // var olHTML = $localStorage.content['issue-' + $stateParams.magazineId];
-    var olHTML = StorageService.getHtml($scope.id);
+    var olHTML = $localStorage.content['issue-' + $stateParams.magazineId];
+    // var olHTML = StorageService.getHtml($scope.id);
     var localAssets = cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/";
     $scope.pages = _.map(olHTML, function(thing) {
       var newHTML = thing.pageContent.replace(/https:\/\/s3-ap-southeast-1.amazonaws.com\/publixx-statics\/images-lib\//g, localAssets);
