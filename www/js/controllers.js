@@ -355,7 +355,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     $scope.issueName = $stateParams.issueName;
     $scope.folderName = $stateParams.folderName;
 
-    $http.get(cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/")
+    $http.get(cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/1.html")
       .success(function(data, status, headers, config) {
         alert(data);
       });
