@@ -158,13 +158,13 @@ return {
     url: '/offline/:folderName/:issueName/:magazineId',
     views: {
       'menuContent': {
-        templateUrl: 'templates/offline.html',
+        templateUrl: 'templates/read.html',
         controller: 'OfflineCtrl'
       }
     }
   })
 
-  .state('app.online-read', {
+  .state('app.read', {
     url: '/online/:folderName/:issueName/:magazineId',
     views: {
       'menuContent': {
