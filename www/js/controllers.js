@@ -116,12 +116,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
                 .success(function(data) {
                   $localStorage.content['issue-' + thing.magazineId] = data.results;
                   StorageService.cacheHtml(thing.magazineId,data.results);
-                  $cordovaFile.checkFile(cordova.file.dataDirectory, "magazine-" + thing.magazineId + ".json")
-                    .then(function (success) {
-                      console.log("not creating file");
-                    }, function (error) {
-                      $cordovaFile.writeFile(cordova.file.cacheDirectory, "magazine-" + thing.magazineId + ".json", data.results, true);
-                    });
+                  $cordovaFile.writeFile(cordova.file.cacheDirectory, "magazine-" + thing.magazineId + ".json", data.results, true);
                   thing.totalPage = data.results.length;
                 });
               var coverImage = thing.issueCover.substring(thing.issueCover.lastIndexOf('/') + 1);
