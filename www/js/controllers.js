@@ -357,12 +357,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
 
     $http.get(cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/")
       .success(function(data, status, headers, config) {
-        data.forEach(function(i, x) {
-          $http.get(cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/" + i)
-            .success(function(data, status, headers, config){
-              alert(data);
-            })
-        });
+        alert(data);
       });
 
     // var olHTML = $localStorage.content['issue-' + $stateParams.magazineId];
