@@ -129,12 +129,10 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
             StorageService.saveList(maglists);
             $q.all(promiseDownload).finally(function(){
               $scope.maglists = StorageService.getList();
-              alert(JSON.stringify($scope.maglists));
             });
           })
           .error(function(data, status, headers, config) {
             $scope.maglists = StorageService.getList();
-            alert(JSON.stringify($scope.maglists));
           })
       });
 
@@ -305,7 +303,10 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     $scope.issueName = $stateParams.issueName;
     $scope.folderName = $stateParams.folderName;
 
-    alert($scope.id +'/n'+ $scope.issueName +'/n'+ $scope.folderName);
+    $http.get(cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/1.html")
+      .success(function(data, status, headers, config) {
+        alert(data);
+    });
 
     $http.get('http://api-dev.publixx.id/issue/' + $scope.id + '/MagzApis/')
       .success(function(data, status, headers, config) {
@@ -358,7 +359,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     $http.get(cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/1.html")
       .success(function(data, status, headers, config) {
         alert(data);
-      });
+    });
 
     // var olHTML = $localStorage.content['issue-' + $stateParams.magazineId];
     var olHTML = StorageService.getHtml($scope.id);
