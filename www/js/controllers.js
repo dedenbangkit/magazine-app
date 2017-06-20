@@ -306,7 +306,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     $http.get(cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/1.html")
       .success(function(data, status, headers, config) {
         alert(data);
-    });
+      })
 
     $http.get('http://api-dev.publixx.id/issue/' + $scope.id + '/MagzApis/')
       .success(function(data, status, headers, config) {
@@ -363,8 +363,6 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
 
     // var olHTML = $localStorage.content['issue-' + $stateParams.magazineId];
     var olHTML = StorageService.getHtml($scope.id);
-    alert($scope.id +'/n'+ $scope.issueName +'/n'+ $scope.folderName);
-    alert(olHTML);
     var localAssets = cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/";
     $scope.pages = _.map(olHTML, function(thing) {
       var newHTML = thing.pageContent.replace(/https:\/\/s3-ap-southeast-1.amazonaws.com\/publixx-statics\/images-lib\//g, localAssets);
