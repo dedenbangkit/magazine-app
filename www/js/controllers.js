@@ -367,18 +367,13 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     $scope.issueName = $stateParams.issueName;
     $scope.folderName = $stateParams.folderName;
     var localAssets = cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/";
-    alert(cordova.file.cacheDirectory + $scope.id.toString() + ".json");
-    $http.get(cordova.file.cacheDirectory + $scope.id.toString() + ".json")
-      .success(function(data) {
-        $scope.pages = _.map(data, function(thing) {
-          var newHTML = thing.pageContent.replace(/https:\/\/s3-ap-southeast-1.amazonaws.com\/publixx-statics\/images-lib\//g, localAssets);
-          thing.pageContent = newHTML;
-          return thing;
-        });
-      })
-      .error(function(data) {
-        alert('data error');
-      });
+    var storedHTML = $localStorage.content['issue-' + $scope.id];
+
+    $scope.pages = _.map(storedHTML, function(thing) {
+      var newHTML = thing.pageContent.replace(/https:\/\/s3-ap-southeast-1.amazonaws.com\/publixx-statics\/images-lib\//g, localAssets);
+      thing.pageContent = newHTML;
+      return thing;
+    });
 
     $scope.options = {
       noSwiping: true,
