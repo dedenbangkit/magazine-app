@@ -1,6 +1,9 @@
 <ion-view view-title="All Issues">
   <ion-content>
-    <div ng-repeat="maglist in maglists" class="list-magazine">
+    <ion-refresher on-refresh="doRefresh()">
+
+    </ion-refresher>
+    <ion-list ng-repeat="maglist in maglists" class="list-magazine">
       <div class="item item-thumbnail-left">
         <img ng-src="{{maglist.coverPath}}">
         <h2>{{maglist.issueName}}</h2>
@@ -12,7 +15,7 @@
         <progress max="100" value="0" id="{{maglist.folderName}}"></progress>
         <p></p>
       </div>
-    </div>
+    </ion-list>
   </ion-content>
 
 </ion-view>

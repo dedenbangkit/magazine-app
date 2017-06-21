@@ -101,6 +101,17 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
       showDelay: 0
     });
 
+    $scope.maglists = [];
+    $scope.$watch('maglists', function() {});
+
+    $scope.doRefresh = function(){
+      $timeout(function () {
+        $scope.loadAll();
+        $scope.$broadcast('scroll.refreshComplete');
+      });
+    };
+
+    $scope.loadAll = function(){
     $timeout(function() {
       $http.get('appinfo.json').success(function(data) {
         var promiseDownload = [];
@@ -116,7 +127,12 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
                 .success(function(data) {
                   $localStorage.content['issue-' + thing.magazineId] = data.results;
                   StorageService.cacheHtml(thing.magazineId,data.results);
-                  $cordovaFile.writeFile(cordova.file.cacheDirectory, "magazine-" + thing.magazineId + ".json", data.results, true);
+                  $cordovaFile.writeFile(cordova.file.cacheDirectory, thing.magazineId.toString() + ".json", data.results, true)
+                  .then(function(success){
+                    console.log("sip")
+                  },function(error){
+                    console.log("failed")
+                  });
                   thing.totalPage = data.results.length;
                 });
               var coverImage = thing.issueCover.substring(thing.issueCover.lastIndexOf('/') + 1);
@@ -135,9 +151,12 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
             $scope.maglists = StorageService.getList();
           })
       });
-
       $ionicLoading.hide();
-    }, 2000);
+    }, 1000);
+    };
+
+    $scope.loadAll();
+
     // var test = StorageService.getIssue(1);
     // console.log(test[0][0]);
 
@@ -348,8 +367,8 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     $scope.issueName = $stateParams.issueName;
     $scope.folderName = $stateParams.folderName;
     var localAssets = cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/";
-
-    $http.get(cordova.file.cacheDirectory + "magazine-" + $scope.id + ".json")
+    alert(cordova.file.cacheDirectory + $scope.id.toString() + ".json");
+    $http.get(cordova.file.cacheDirectory + $scope.id.toString() + ".json")
       .success(function(data) {
         $scope.pages = _.map(data, function(thing) {
           var newHTML = thing.pageContent.replace(/https:\/\/s3-ap-southeast-1.amazonaws.com\/publixx-statics\/images-lib\//g, localAssets);
