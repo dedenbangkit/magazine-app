@@ -116,11 +116,11 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
                 .success(function(data) {
                   $localStorage.content['issue-' + thing.magazineId] = data.results;
                   StorageService.cacheHtml(thing.magazineId,data.results);
-                  $cordovaFile.writeFile(cordova.file.dataDirectory, "magazine-" + thing.magazineId + ".json", data.results, true);
+                  $cordovaFile.writeFile(cordova.file.cacheDirectory, "magazine-" + thing.magazineId + ".json", data.results, true);
                   thing.totalPage = data.results.length;
                 });
               var coverImage = thing.issueCover.substring(thing.issueCover.lastIndexOf('/') + 1);
-              thing.coverPath = cordova.file.dataDirectory + "contents/covers/" + coverImage;
+              thing.coverPath = cordova.file.cacheDirectory + "contents/covers/" + coverImage;
               promiseDownload.push($cordovaFileTransfer.download(thing.issueCover, thing.coverPath, {}, true));
               thing.folderName = thing.zipFile.substring(thing.zipFile.lastIndexOf('/') + 1).slice(0, -4);
               thing.index = idx;
@@ -144,8 +144,8 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     $scope.downloadContent = function(fn, zf, idx, iName) {
 
       var url = zf;
-      var targetPath = cordova.file.dataDirectory + "contents/" + fn + ".zip";
-      var unzipPath = cordova.file.dataDirectory + "contents/" + fn + "/";
+      var targetPath = cordova.file.cacheDirectory + "contents/" + fn + ".zip";
+      var unzipPath = cordova.file.cacheDirectory + "contents/" + fn + "/";
       var jsonPath = unzipPath + "data_json.json";
       var trustHosts = true;
       var options = {};
@@ -195,7 +195,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
 
     //Removing File
     $scope.removeFile = function(fn) {
-      $cordovaFile.removeFile(cordova.file.dataDirectory + "contents/", fn + ".zip")
+      $cordovaFile.removeFile(cordova.file.cacheDirectory + "contents/", fn + ".zip")
         .then(function(success) {
           document.getElementById('btn-' + fn).remove();
         }, function(error) {
@@ -347,9 +347,9 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     $scope.id = $stateParams.magazineId;
     $scope.issueName = $stateParams.issueName;
     $scope.folderName = $stateParams.folderName;
-    var localAssets = cordova.file.dataDirectory + "contents/" + $scope.folderName + "/";
+    var localAssets = cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/";
 
-    $http.get(cordova.file.dataDirectory + "magazine-" + $scope.id + ".json")
+    $http.get(cordova.file.cacheDirectory + "magazine-" + $scope.id + ".json")
       .success(function(data) {
         $scope.pages = _.map(data, function(thing) {
           var newHTML = thing.pageContent.replace(/https:\/\/s3-ap-southeast-1.amazonaws.com\/publixx-statics\/images-lib\//g, localAssets);
