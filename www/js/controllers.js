@@ -119,10 +119,10 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
         $http.get('http://api-dev.publixx.id/find/MagzApis/' + project + '/2JKDLFCUER')
           .success(function(data, status, headers, config) {
             var maglists = _.map(data.results, function(thing, idx) {
-              thing.progress = StorageService.cacheIssue(idx);
+              thing.folderName = thing.zipFile.substring(thing.zipFile.lastIndexOf('/') + 1).slice(0, -4);
+              thing.progress = StorageService.cacheIssue(thing.folderName);
               thing.magazineId = thing.magazineId;
               thing.issueName = thing.issueName;
-              console.log(idx);
               $http.get('http://api-dev.publixx.id/issue/' + thing.magazineId + '/MagzApis/')
                 .success(function(data) {
                   $localStorage.content['issue-' + thing.magazineId] = data.results;
@@ -138,7 +138,6 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
               var coverImage = thing.issueCover.substring(thing.issueCover.lastIndexOf('/') + 1);
               thing.coverPath = cordova.file.cacheDirectory + "contents/covers/" + coverImage;
               promiseDownload.push($cordovaFileTransfer.download(thing.issueCover, thing.coverPath, {}, true));
-              thing.folderName = thing.zipFile.substring(thing.zipFile.lastIndexOf('/') + 1).slice(0, -4);
               thing.index = idx;
               return thing;
             });
@@ -160,7 +159,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     // var test = StorageService.getIssue(1);
     // console.log(test[0][0]);
 
-    $scope.downloadContent = function(fn, zf, idx, iName) {
+    $scope.downloadContent = function(fn, zf, ids, iName, idx) {
 
       var url = zf;
       var targetPath = cordova.file.cacheDirectory + "contents/" + fn + ".zip";
@@ -179,19 +178,21 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
           $scope.$watch('maglists[' + idx + '].progress', function() {});
           $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
             .then(function(result) {
+              var promiseDownload = [];
               $cordovaZip.unzip(targetPath, unzipPath).then(function() {
                 $http.get(jsonPath).success(function(data) {
                   var imageDownload = 50 / data.length;
                   data.forEach(function(i, x) {
                     var imageName = unzipPath + i.substring(i.lastIndexOf('/') + 1);
-                    $cordovaFileTransfer.download(i, imageName, options, trustHosts);
+                    promiseDownload.push($cordovaFileTransfer.download(i, imageName, options, trustHosts));
                     $scope.maglists[idx].progress += imageDownload;
                     document.getElementById(fn).value += imageDownload;
-                    StorageService.addMagazine(idx);
                   });
                 });
               });
-
+              $q.all(promiseDownload).finally(function(){
+                StorageService.addMagazine(fn);
+              });
               $scope.removeFile(fn);
             }, function(err) {
                  var alertPopup = $ionicPopup.alert({

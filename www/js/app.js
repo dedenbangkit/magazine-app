@@ -92,27 +92,23 @@ var _getMagazine = function () {
   return $localStorage.magazine;
 }
 var _addMagazine = function (it) {
-  $localStorage.magazine.indexOf(it) === -1 ? $localStorage.magazine.push(it) : console.log('downloaded');
+  $localStorage.magazine['mag-'+it] !== undefined ? console.log("downloaded") : $localStorage.magazine['mag-'+it] = "downloaded";
 }
 var _cacheIssue = function (it) {
-  return $localStorage.magazine.indexOf(it) === -1 ? 0 : 100;
+  return $localStorage.magazine['mag-'+it] !== undefined ? 100 : 0;
 }
 var _getIssue = function(it) {
   return $localStorage.issue['mag'+it];
 }
 
 var _cacheHtml = function(it, comes) {
-  $localStorage.html.indexOf('mag-'+it) === -1 ? $localStorage.html['mag-'+it] = comes : console.log($localStorage.html.it);
+  $localStorage.html['mag-'+it] !== undefined ? console.log("downloaded") : $localStorage.html['mag-'+it] = comes;
 }
 
 var _getHtml = function(it){
   return $localStorage.html['mag-'+it];
 }
 
-var _clearCache = function(){
-  $localStorage.issue = [];
-  $localStorage.magazine = [];
-}
 
 return {
     getStatus: _getStatus,
@@ -128,7 +124,6 @@ return {
     getIssue: _getIssue,
     cacheHtml: _cacheHtml,
     getHtml: _getHtml,
-    clearCache: _clearCache,
   };
 })
 
