@@ -60,7 +60,7 @@ $localStorage = $localStorage.$default({
   content: [],
   magazine: [],
   issue: [],
-  html: [],
+  html: {},
 });
 var _getStatus = function() {
   return $localStorage.status;

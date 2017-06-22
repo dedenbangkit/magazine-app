@@ -368,9 +368,9 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     $scope.issueName = $stateParams.issueName;
     $scope.folderName = $stateParams.folderName;
     var localAssets = cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/";
-    var storedHTML = $localStorage.content['issue-' + $scope.id];
-
-    $scope.pages = _.map(storedHTML, function(thing) {
+    // var storedHTML = $localStorage.content['issue-' + $scope.id];
+    var htmlObj = StorageService.getHtml($scope.id);
+    $scope.pages = _.map(htmlObj, function(thing) {
       var newHTML = thing.pageContent.replace(/https:\/\/s3-ap-southeast-1.amazonaws.com\/publixx-statics\/images-lib\//g, localAssets);
       thing.pageContent = newHTML;
       return thing;
