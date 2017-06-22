@@ -92,10 +92,16 @@ var _getMagazine = function () {
   return $localStorage.magazine;
 }
 var _addMagazine = function (it) {
-  $localStorage.magazine['mag-'+it] !== undefined ? console.log("downloaded") : $localStorage.magazine['mag-'+it] = "downloaded";
+  $localStorage.magazine.it !== undefined ? console.log("downloaded") : $localStorage.magazine.push(it);
 }
 var _cacheIssue = function (it) {
-  return $localStorage.magazine['mag-'+it] !== undefined ? 100 : 0;
+  var strings = JSON.stringify($localStorage.magazine);
+  var available = strings.search(it);
+  if (available > 0){
+    return 100;
+  }else{
+    return 0;
+  }
 }
 var _getIssue = function(it) {
   return $localStorage.issue['mag'+it];
