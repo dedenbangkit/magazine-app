@@ -365,7 +365,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
   ) {
     $scope.details = [];
     $scope.id = $stateParams.magazineId;
-    $scope.issueName = $stateParams.issueName;
+    $scope.issueName = $stateParams.issueName.toString();
     $scope.folderName = $stateParams.folderName;
     var localAssets = cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/";
     // var storedHTML = $localStorage.content['issue-' + $scope.id];
