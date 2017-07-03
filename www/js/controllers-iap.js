@@ -224,6 +224,83 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
         });
     };
 
+    //In App Purchase
+
+    // var productIds = ['com.publixx.magazineapp.5']; // <- Add your product Ids here
+    //
+    // $scope.loadProducts = function() {
+    //   $ionicLoading.show({
+    //     template: spinner + 'Loading Products...'
+    //   });
+    //   inAppPurchase
+    //     .getProducts(productIds)
+    //     .then(function(products) {
+    //       $ionicLoading.hide();
+    //       $scope.products = products;
+    //       // returnnya productId,title,price
+    //     })
+    //     .catch(function(err) {
+    //       $ionicLoading.hide();
+    //       console.log(err);
+    //     });
+    // };
+    //
+    // $scope.buy = function(productId) {
+    //
+    //   $ionicLoading.show({
+    //     template: spinner + 'Purchasing...'
+    //   });
+    //   inAppPurchase
+    //     .buy(productId)
+    //     .then(function(data) {
+    //       console.log(JSON.stringify(data));
+    //       console.log('consuming transactionId: ' + data.transactionId);
+    //       return inAppPurchase.consume(data.type, data.receipt, data.signature);
+    //     })
+    //     .then(function() {
+    //       var alertPopup = $ionicPopup.alert({
+    //         title: 'Purchase was successful!',
+    //         template: 'Check your console log for the transaction data'
+    //       });
+    //       console.log('consume done!');
+    //       $ionicLoading.hide();
+    //     })
+    //     .catch(function(err) {
+    //       $ionicLoading.hide();
+    //       console.log(err);
+    //       $ionicPopup.alert({
+    //         title: 'Something went wrong',
+    //         template: 'Check your console log for the error details'
+    //       });
+    //     });
+    //
+    // };
+    //
+    // $scope.restore = function() {
+    //   $ionicLoading.show({
+    //     template: spinner + 'Restoring Purchases...'
+    //   });
+    //   inAppPurchase
+    //     .restorePurchases()
+    //     .then(function(purchases) {
+    //       $ionicLoading.hide();
+    //       console.log(JSON.stringify(purchases));
+    //       $ionicPopup.alert({
+    //         title: 'Restore was successful!',
+    //         template: 'Check your console log for the restored purchases data'
+    //       });
+    //     })
+    //     .catch(function(err) {
+    //       $ionicLoading.hide();
+    //       console.log(err);
+    //       $ionicPopup.alert({
+    //         title: 'Something went wrong',
+    //         template: 'Check your console log for the error details'
+    //       });
+    //     });
+    // };
+
+
   })
 
   //Read Page Online
