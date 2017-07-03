@@ -317,8 +317,10 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
   ) {
     $scope.details = [];
     $scope.id = $stateParams.magazineId;
-    $scope.issueName = $stateParams.issueName;
+    $scope.issueIdx = $stateParams.issueIdx;
     $scope.folderName = $stateParams.folderName;
+    var issueInfo = StorageService.getInfo($scope.issueIdx);
+    $scope.issueName = issueInfo;
 
     $http.get('http://api-dev.publixx.id/issue/' + $scope.id + '/MagzApis/')
       .success(function(data, status, headers, config) {
@@ -326,7 +328,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
       })
       .error(function(data, status, headers, config) {
         console.log('data error');
-      })
+      });
 
     $scope.options = {
       noSwiping: true,
@@ -366,8 +368,11 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
   ) {
     $scope.details = [];
     $scope.id = $stateParams.magazineId;
-    $scope.issueName = $stateParams.issueName.toString();
+    $scope.issueIdx = $stateParams.issueIdx;
     $scope.folderName = $stateParams.folderName;
+    var issueInfo = StorageService.getInfo($scope.issueIdx);
+    $scope.issueName = issueInfo;
+
     var localAssets = cordova.file.cacheDirectory + "contents/" + $scope.folderName + "/";
     // var storedHTML = $localStorage.content['issue-' + $scope.id];
     var htmlObj = StorageService.getHtml($scope.id);
@@ -383,6 +388,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
       watchSlidesVisibility: true,
       pagination: false,
     };
+
 
     $ionicSideMenuDelegate.canDragContent(false)
     $ionicModal.fromTemplateUrl('templates/modal.html', {

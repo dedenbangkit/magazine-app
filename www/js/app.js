@@ -107,6 +107,10 @@ var _getIssue = function(it) {
   return $localStorage.issue['mag'+it];
 }
 
+var _getInfo = function(it){
+  return $localStorage.magList[it]['issueName'];
+}
+
 var _cacheHtml = function(it, comes) {
   $localStorage.html['mag-'+it] !== undefined ? console.log("downloaded") : $localStorage.html['mag-'+it] = comes;
 }
@@ -128,6 +132,7 @@ return {
     addMagazine: _addMagazine,
     cacheIssue: _cacheIssue,
     getIssue: _getIssue,
+    getInfo: _getInfo,
     cacheHtml: _cacheHtml,
     getHtml: _getHtml,
   };
@@ -156,7 +161,7 @@ return {
   })
 
   .state('app.offline-read', {
-    url: '/offline/:folderName/:issueName/:magazineId',
+    url: '/offline/:folderName/:issueIdx/:magazineId',
     views: {
       'menuContent': {
         templateUrl: 'templates/read.html',
@@ -166,7 +171,7 @@ return {
   })
 
   .state('app.read', {
-    url: '/online/:folderName/:issueName/:magazineId',
+    url: '/online/:folderName/:issueIdx/:magazineId',
     views: {
       'menuContent': {
         templateUrl: 'templates/read.html',
