@@ -268,9 +268,13 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
       $scope.modal = modal;
     });
 
-    $scope.openModal = function() {
-      $scope.modal.show()
-      $scope.imgUrl = "http://placekitten.com/g/500/800";
+    $scope.imgUrl = "http://placekitten.com/g/500/800";
+    $scope.$watch('imgUrl', function() {});
+
+    $scope.openModal = function(url) {
+      $scope.modal.show();
+      $scope.$watch('imgUrl', function() {});
+      $scope.imgUrl = url;
     }
 
   })
@@ -321,9 +325,27 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
       $scope.modal = modal;
     });
 
-    $scope.openModal = function() {
-      $scope.modal.show()
-      $scope.imgUrl = "http://placekitten.com/g/500/800";
+    $scope.imgUrl = "http://placekitten.com/g/500/800";
+
+    $scope.openModal = function(url) {
+      $scope.modal.show();
+      $scope.$watch('imgUrl', function() {});
+      $scope.imgUrl = url;
     }
 
   })
+
+  //directive
+.directive('compile', ['$compile', function ($compile) {
+    return function(scope, element, attrs) {
+      scope.$watch(
+        function(scope) {
+          return scope.$eval(attrs.compile);
+        },
+        function(value) {
+          element.html(value);
+          $compile(element.contents())(scope);
+        }
+    );
+  };
+}]);
