@@ -123,6 +123,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
               thing.progress = StorageService.cacheIssue(thing.folderName);
               thing.magazineId = thing.magazineId;
               thing.issueName = thing.issueName;
+              thing.issueRegex = thing.issueName.replace(/#/g, "");
               $http.get('http://api-dev.publixx.id/issue/' + thing.magazineId + '/MagzApis/')
                 .success(function(data) {
                   $localStorage.content['issue-' + thing.magazineId] = data.results;
