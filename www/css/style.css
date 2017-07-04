@@ -261,3 +261,11 @@ progress[value="100"] {
 .swiper-slide img{
   width: inherit;
 }
+
+audio{
+  width: 100%;
+}
+
+.padding {
+  padding: 0px;
+}
