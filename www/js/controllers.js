@@ -226,6 +226,16 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
 
   })
 
+  //Downloaded Only
+  .controller('MaglistsDownloadedCtrl', function(
+    $scope,
+    $ionicPlatform,
+    $localStorage,
+    StorageService,
+  ) {
+    $scope.maglists = StorageService.getList();
+  })
+
   //Read Page Online
   .controller('OnlineCtrl', function(
     $scope,

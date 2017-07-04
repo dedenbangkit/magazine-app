@@ -1,0 +1,14 @@
+<ion-view view-title="Downloaded">
+  <ion-content>
+    <ion-list ng-repeat="maglist in maglists" class="list-magazine">
+      <div class="item item-thumbnail-left" ng-show="{{maglist.progress}} == 100">
+        <img ng-src="{{maglist.coverPath}}">
+        <h2>{{maglist.issueName}}</h2>
+        <p>Release date: {{maglist.releaseDate}}</p>
+        <a class="button downloaded" href="#app/offline/{{maglist.folderName}}/{{maglist.index}}/{{maglist.magazineId}}">Read</a>
+        <p></p>
+      </div>
+    </ion-list>
+  </ion-content>
+
+</ion-view>

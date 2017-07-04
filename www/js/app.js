@@ -160,6 +160,16 @@ return {
     }
   })
 
+  .state('app.maglistsdn', {
+    url: '/maglists-dn',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/maglists-dn.html',
+        controller: 'MaglistsDownloadedCtrl'
+      }
+    }
+  })
+
   .state('app.offline-read', {
     url: '/offline/:folderName/:issueIdx/:magazineId',
     views: {
