@@ -255,7 +255,14 @@ progress[value="100"] {
   left: 0;
   width: 100%;
   padding: 2px;
-  background: #eee;
+  background: #fff;
+}
+
+.swiper-slide .item, .swiper-slide .active{
+  padding: 0px;
+  margin: 0px;
+  border: none;
+  background: none;
 }
 
 .swiper-slide img{
@@ -268,4 +275,8 @@ audio{
 
 .padding {
   padding: 0px;
+}
+
+iframe {
+  width: 100%;
 }

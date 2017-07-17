@@ -287,6 +287,11 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
       $scope.imgUrl = url;
     }
 
+    //OpenLink
+    $scope.openWindow = function(link_url) {
+      window.open(link_url, '_blank', 'location=no');
+    }
+
   })
 
   //Read Page Online
