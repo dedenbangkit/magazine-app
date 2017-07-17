@@ -239,6 +239,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
   //Read Page Online
   .controller('OnlineCtrl', function(
     $scope,
+    $cordovaInAppBrowser,
     $http,
     $stateParams,
     $ionicSideMenuDelegate,
@@ -285,19 +286,25 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
       $scope.modal.show();
       $scope.$watch('imgUrl', function() {});
       $scope.imgUrl = url;
-    }
+    };
 
     //OpenLink
+    var browserOptions = {
+      location: 'no',
+      clearcache: 'no',
+      toolbar: 'yes'
+    };
     $scope.openWindow = function(link_url) {
-      window.open(link_url, '_blank', 'location=no');
-    }
+      $cordovaInAppBrowser.open(link_url, '_blank', browserOptions);
+    };
 
   })
 
-  //Read Page Online
+  //Read Page Onffine
   .controller('OfflineCtrl', function(
     $scope,
     $http,
+    $cordovaInAppBrowser,
     $stateParams,
     $ionicSideMenuDelegate,
     $ionicScrollDelegate,
@@ -346,7 +353,17 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
       $scope.modal.show();
       $scope.$watch('imgUrl', function() {});
       $scope.imgUrl = url;
-    }
+    };
+
+    //OpenLink
+    var browserOptions = {
+      location: 'no',
+      clearcache: 'no',
+      toolbar: 'no'
+    };
+    $scope.openWindow = function(link_url) {
+      $cordovaInAppBrowser.open(link_url, '_blank', browserOptions);
+    };
 
   })
 
