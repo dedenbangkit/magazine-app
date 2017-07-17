@@ -233,6 +233,8 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
     $localStorage,
     StorageService,
   ) {
+    $scope.maglists = [];
+    $scope.$watch('maglists', function() {});
     $scope.maglists = StorageService.getList();
   })
 
