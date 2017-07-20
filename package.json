@@ -6,7 +6,7 @@
         "com-sarriaroman-photoviewer": "^1.1.10",
         "cordova-plugin-compat": "^1.1.0",
         "cordova-plugin-console": "1.0.5",
-        "cordova-plugin-device": "1.1.4",
+        "cordova-plugin-device": "^1.1.6",
         "cordova-plugin-file": "^4.3.3",
         "cordova-plugin-file-transfer": "^1.6.3",
         "cordova-plugin-inappbrowser": "^1.7.1",
@@ -51,7 +51,6 @@
             "cordova-plugin-file-transfer": {},
             "com-sarriaroman-photoviewer": {},
             "cordova-plugin-console": {},
-            "cordova-plugin-device": {},
             "cordova-plugin-splashscreen": {},
             "cordova-plugin-statusbar": {},
             "cordova-plugin-whitelist": {},
@@ -59,7 +58,8 @@
             "cordova-plugin-zip": {},
             "cordova-plugin-inapppurchase": {},
             "org.pbernasconi.progressindicator": {},
-            "cordova-plugin-inappbrowser": {}
+            "cordova-plugin-inappbrowser": {},
+            "cordova-plugin-device": {}
         },
         "platforms": []
     }
