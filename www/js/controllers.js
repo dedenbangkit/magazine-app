@@ -137,9 +137,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
                   thing.totalPage = data.results.length;
                 });
               var coverImage = thing.issueCover.substring(thing.issueCover.lastIndexOf('/') + 1);
-              //balikin ke semula
-              // thing.coverPath = cordova.file.cacheDirectory + "contents/covers/" + coverImage;
-              thing.coverPath = 'https://about.canva.com/wp-content/uploads/sites/3/2015/11/car_magazine.png';
+              thing.coverPath = cordova.file.cacheDirectory + "contents/covers/" + coverImage;
               promiseDownload.push($cordovaFileTransfer.download(thing.issueCover, thing.coverPath, {}, true));
               thing.index = idx;
               return thing;
