@@ -1,9 +1,17 @@
-<ion-view view-title="{{issueName}}">
-  <ion-content scroll="false">
-    <ion-slides slider="data.slider" options="options">
+<ion-view view-title="{{issueName}} - Page {{data.currentPage}}">
+
+      <ion-nav-buttons side="right">
+      <button class="button button-icon ion-more" ng-click="popover.show($event)">
+      </button>
+      </ion-nav-buttons>
+
+  <ion-content scroll="false" on-double-tap="showNavi()">
+    <ion-slides slider="data.sliderDelegate" options="options">
       <ion-slide-page ng-repeat="page in pages" scroll="true">
         <div compile=page.pageContent></div>
       </ion-slide-page>
     </ion-slides>
   </ion-content>
+
+  <!-- <a ng-click="addComment(data.currentPage)" class="page-number">{{data.currentPage}}</a> -->
 </ion-view>

@@ -1,4 +1,106 @@
 /* Empty. Add your own CSS if you like */
+.cvr{
+  height: 155px;
+  overflow-y: hidden;
+}
+.cover{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.page-number{
+  width: 40px;
+  position: fixed;
+  bottom: 10%;
+  right: 10%;
+  background-color: rgba(0, 0, 0, 0.7);
+  font-size: 12px;
+  color: #FFF;
+  text-align: center;
+  padding: 10px;
+  border-radius: 100%;
+  font-weight: 600;
+  z-index:20;
+}
+
+progress{
+  width: 80%;
+  margin-top: -5px;
+  height: 3px;
+}
+
+.button.icon-left:before{
+  float: none;
+}
+
+.no-rad{
+  width:80%;
+  border-radius: 0px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.popover{
+  height:175px;
+}
+
+.date-modal{
+  float: right;
+  font-size: 12px;
+}
+
+/*----Bugs----*/
+.modal-open {
+    pointer-events: auto;
+}
+/*----Bugs----*/
+
+.swiper-slide > div{
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.popup-container{
+  z-index: 200;
+}
+.popup-container .popup{
+  background-color: #FFF !important;
+}
+
+.alpha{
+  display: none;
+}
+
+.unalpha{
+  display:block;
+}
+
+img.issue-cover{
+  padding: 20px;
+  width: 60%!important;
+}
+
+.tabs{
+  background-color: #000;
+  color:#FFF;
+  padding-top: 1px;
+}
+
+.tabs-icon-left.tabs .tab-item,
+.tabs-icon-left > .tabs .tab-item,
+.tabs-icon-right.tabs .tab-item,
+.tabs-icon-right > .tabs .tab-item {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.tabs-icon-left > .tabs .tab-item .icon, .tabs-icon-left.tabs .tab-item .icon{
+  padding-right: 10px;
+}
+
+a.tab-item-active{
+  background-color: #387ef5;
+}
+
 .bar.bar-stable {
     background-color: #2c539e;
     color: #FEFEFE;
@@ -8,8 +110,16 @@
     color: #FEFEFE;
 }
 
+.bar .button.button-icon, .bar button.button-icon{
+  color:#FFF;
+}
+
 .bar-stable .button.button-icon, .bar-stable .button.button-clear{
   color:#FFF;
+}
+
+.bar.bar-dark{
+  background-color:#000;
 }
 
 .item-input{
@@ -45,7 +155,7 @@
 }
 
 .item-avatar, .menu{
-  background-image: url('../img/bg-menu.jpg');
+  background: #EEE;
 }
 
 .menu{
@@ -87,7 +197,6 @@
 .item-avatar img{
   border-radius: 50%;
   max-width: 100px;
-  margin: 40px 20px;
   border: #fff solid 5px;
   box-shadow: 2px 3px 10px #888888;
 }
@@ -279,28 +388,4 @@ audio{
 
 iframe {
   width: 100%;
-}
-
-/*VideoWrapper*/
-
-.videoWrapper img {
-  width:100%;
-  height:auto;
-}
-a.videoPlayer {
-  float: left;
-  position: relative;
-}
-a.videoPlayer span {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  background: url("../img/play-btn.png") no-repeat;
-  background-position: 50% 50%;
-  background-size: 300%;
-}
-@media screen and (max-width: 480px) {
-  a.videoPlayer span {
-    background-size: 400%;
-  }
 }

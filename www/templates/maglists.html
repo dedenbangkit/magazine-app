@@ -3,19 +3,20 @@
     <ion-refresher on-refresh="doRefresh()">
 
     </ion-refresher>
-    <ion-list ng-repeat="maglist in maglists" class="list-magazine">
-      <div class="item item-thumbnail-left">
-        <img ng-src="{{maglist.coverPath}}">
-        <h2>{{maglist.issueName}}</h2>
-        <p>Release date: {{maglist.releaseDate}}</p>
-        <a ng-if="maglist.progress === 100" class="button downloaded" href="#app/offline/{{maglist.folderName}}/{{maglist.index}}/{{maglist.magazineId}}">Read</a>
-        <a ng-if="maglist.progress === 0" class="button download-issue" href="#app/online/{{maglist.folderName}}/{{maglist.index}}/{{maglist.magazineId}}">Read</a>
-        <button ng-if="maglist.progress === 0" id="btn-{{maglist.folderName}}" class="button download-issue" ng-click="downloadContent(maglist.folderName, maglist.zipFile, maglist.magazineId, maglist.issueName, maglist.index)">Download</button>
-        <p ng-if="maglist.progress > 0 && maglist.progress < 100">Downloading...</p>
-        <progress max="100" value="0" id="{{maglist.folderName}}"></progress>
-        <p></p>
+
+    <div ng-repeat="maglist in maglists">
+      <div class="col-xs-6" align="center" style="margin-top:20px;">
+        <b>{{maglist.issueName}}</b>
+        <p>{{maglist.releaseDate}}</p>
+
+        <div class="cvr">
+          <a ng-href="#/tab/maglists-view/{{maglist.index}}">
+        <img style="width:80%" class="img img-responsive cover" ng-src="{{maglist.coverPath}}">
+          </a>
+        </div>
       </div>
-    </ion-list>
+    </div>
+
   </ion-content>
 
 </ion-view>

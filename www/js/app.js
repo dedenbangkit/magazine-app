@@ -111,6 +111,10 @@ var _getInfo = function(it){
   return $localStorage.magList[it]['issueName'];
 }
 
+var _getMagazineIndex = function(it){
+  return $localStorage.magList[it];
+}
+
 var _cacheHtml = function(it, comes) {
   $localStorage.html['mag-'+it] !== undefined ? console.log("downloaded") : $localStorage.html['mag-'+it] = comes;
 }
@@ -133,6 +137,7 @@ return {
     cacheIssue: _cacheIssue,
     getIssue: _getIssue,
     getInfo: _getInfo,
+    getIndex: _getMagazineIndex,
     cacheHtml: _cacheHtml,
     getHtml: _getHtml,
   };
@@ -143,91 +148,103 @@ return {
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-  .state('app', {
-    url: '/app',
+  .state('tab', {
+    url: '/tab',
     abstract: true,
-    templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
+    templateUrl: 'templates/tabs.html',
   })
 
-  .state('app.maglists', {
+  .state('tab.maglists', {
     url: '/maglists',
     views: {
-      'menuContent': {
+      'tab-maglists': {
         templateUrl: 'templates/maglists.html',
         controller: 'MaglistsCtrl'
       }
     }
   })
 
-  .state('app.maglistsdn', {
+  .state('tab.maglistsdn', {
     url: '/maglists-dn',
     views: {
-      'menuContent': {
+      'tab-maglists-dn': {
         templateUrl: 'templates/maglists-dn.html',
         controller: 'MaglistsDownloadedCtrl'
       }
     }
   })
 
-  .state('app.offline-read', {
+  .state('tab.maglistsview', {
+    url: '/maglists-view/:issueIdx',
+    views: {
+      'tab-maglists': {
+        templateUrl: 'templates/maglists-view.html',
+        controller: 'MaglistsViewCtrl'
+      }
+    }
+  })
+
+  .state('tab.offline-read', {
     url: '/offline/:folderName/:issueIdx/:magazineId',
     views: {
-      'menuContent': {
+      'tab-maglists': {
         templateUrl: 'templates/read.html',
         controller: 'OfflineCtrl'
       }
     }
   })
 
-  .state('app.read', {
+  .state('tab.online', {
     url: '/online/:folderName/:issueIdx/:magazineId',
     views: {
-      'menuContent': {
+      'tab-maglists': {
         templateUrl: 'templates/read.html',
         controller: 'OnlineCtrl'
       }
     }
   })
 
-  .state('app.account', {
+  .state('tab.account', {
     url: '/account',
     views: {
-      'menuContent': {
-        templateUrl: 'templates/tab-account.html'
+      'tab-settings': {
+        templateUrl: 'templates/tab-account.html',
+        controller: 'AppCtrl'
       }
     }
   })
 
-  .state('app.settings', {
+  .state('tab.settings', {
     url: '/settings',
     views: {
-      'menuContent': {
+      'tab-settings': {
         templateUrl: 'templates/settings.html',
-        controller: 'SettingsCtrl'
+        controller: 'AppCtrl'
       }
     }
   })
 
-  .state('app.general', {
+  .state('tab.general', {
     url: '/general',
     views: {
-      'menuContent': {
-        templateUrl: 'templates/tab-general.html'
+      'tab-settings': {
+        templateUrl: 'templates/tab-general.html',
+        controller: 'AppCtrl'
       }
     }
   })
 
-  .state('app.about', {
+  .state('tab.about', {
     url: '/about',
     views: {
-      'menuContent': {
-        templateUrl: 'templates/tab-about.html'
+      'tab-about': {
+        templateUrl: 'templates/tab-about.html',
+        controller: 'AppCtrl'
       }
     }
   });
 
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/maglists');
+  $urlRouterProvider.otherwise('/tab/maglists');
 });
