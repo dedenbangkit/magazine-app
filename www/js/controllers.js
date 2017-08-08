@@ -74,6 +74,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
 
   .controller('MaglistsCtrl', function(
     $scope,
+    $rootScope,
     $ionicPlatform,
     $ionicLoading,
     $ionicPopup,
@@ -101,8 +102,8 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
       showDelay: 0
     });
 
-    $scope.maglists = [];
-    $scope.$watch('maglists', function() {});
+    // $scope.maglists = [];
+    // $scope.$watch('maglists', function() {});
 
     $scope.doRefresh = function(){
       $timeout(function () {
@@ -144,11 +145,11 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
             });
             StorageService.saveList(maglists);
             $q.all(promiseDownload).finally(function(){
-              $scope.maglists = StorageService.getList();
+              $rootScope.maglists = StorageService.getList();
             });
           })
           .error(function(data, status, headers, config) {
-            $scope.maglists = StorageService.getList();
+            $rootScope.maglists = StorageService.getList();
           })
       });
       $ionicLoading.hide();
@@ -174,6 +175,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
 
   .controller('MaglistsViewCtrl',function(
     $scope,
+    $rootScope,
     $ionicPlatform,
     $ionicLoading,
     $ionicPopup,
@@ -192,10 +194,10 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
   ){
     $scope.theList = StorageService.getIndex($stateParams.issueIdx);
 
-    $scope.maglists = [];
-    $scope.$watch('maglists', function() {});
+    $scope.views = [];
+    $scope.$watch('views', function() {});
 
-    $scope.maglists.push($scope.theList);
+    $scope.views.push($scope.theList);
     var issueInfo = StorageService.getInfo($stateParams.issueIdx);
     $scope.issueName = issueInfo;
     $scope.downloadContent = function(fn, zf, ids, iName, idx) {
@@ -214,7 +216,7 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
 
       confirmPopup.then(function(res) {
         if (res) {
-          $scope.$watch('maglists[' + idx + '].progress', function() {});
+          // $scope.$watch('maglists[' + idx + '].progress', function() {});
           $cordovaFileTransfer.download(url, targetPath, options, trustHosts)
             .then(function(result) {
               var promiseDownload = [];
@@ -224,7 +226,8 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
                   data.forEach(function(i, x) {
                     var imageName = unzipPath + i.substring(i.lastIndexOf('/') + 1);
                     promiseDownload.push($cordovaFileTransfer.download(i, imageName, options, trustHosts));
-                    $scope.maglists[idx].progress += imageDownload;
+                    $rootScope.maglists[idx].progress += imageDownload;
+                    $scope.views[idx].progress += imageDownload;
                     document.getElementById(fn).value += imageDownload;
                   });
                 });
@@ -244,7 +247,8 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
             }, function(progress) {
               progressBar = (progress.loaded / progress.total) * 50;
               document.getElementById(fn).value = progressBar;
-              $scope.maglists[idx].progress = progressBar;
+              $rootScope.maglists[idx].progress = progressBar;
+              $scope.views[idx].progres = progressBar;
             });
 
         }
@@ -257,13 +261,14 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
   //Downloaded Only
   .controller('MaglistsDownloadedCtrl', function(
     $scope,
+    $rootScope,
     $ionicPlatform,
     $localStorage,
     StorageService,
   ) {
-    $scope.maglists = [];
-    $scope.$watch('maglists', function() {});
-    $scope.maglists = StorageService.getList();
+    // $scope.maglists = [];
+    // $scope.$watch('maglists', function() {});
+    // $scope.maglists = StorageService.getList();
   })
 
   //Read Page Online

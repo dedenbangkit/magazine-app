@@ -5,7 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngStorage', 'ngLodash', 'ngSanitize'])
-.run(function($rootScope,
+.run(function(
+  $rootScope,
   $cordovaFile,
   $ionicPlatform,
   $cordovaNetwork,
@@ -29,6 +30,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ngStora
       StatusBar.styleBlackOpaque();
       StatusBar.backgroundColorByName("black");
     }
+
+    $rootScope.maglists = [];
+    $rootScope.$watch('maglists', function() {});
 
   });
 

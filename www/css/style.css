@@ -1,4 +1,8 @@
 /* Empty. Add your own CSS if you like */
+.cream_bg{
+ background-image: url('/img/cream_pixels.png');
+}
+
 .cvr{
   height: 155px;
   overflow-y: hidden;

@@ -1,7 +1,7 @@
 <ion-view view-title="{{issueName}}">
-  <ion-content>
+  <ion-content class="cream_bg">
 
-    <div class="col-xs-12" style="margin-top:20px;" ng-repeat="maglist in maglists">
+    <div class="col-xs-12" style="margin-top:20px;" ng-repeat="maglist in views">
         <center><img style="width:80%; text-align:center" class="img img-responsive cover" ng-src="{{maglist.coverPath}}"></center>
         <center><p ng-if="maglist.progress > 0 && maglist.progress < 100">Downloading...</p></center>
         <progress max="100" value="0" id="{{maglist.folderName}}"></progress>
