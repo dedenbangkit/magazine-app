@@ -7,8 +7,8 @@
         <progress max="100" value="0" id="{{maglist.folderName}}"></progress>
         <hr style="width:80%">
       <center>
-      <a ng-if="maglist.progress === 100" class="button icon-left ion-ios-bookmarks button-positive no-rad" href="#tab/offline/{{maglist.folderName}}/{{maglist.index}}/{{maglist.magazineId}}">Go to Issue</a>
-      <a ng-if="maglist.progress === 0" class="button icon-left ion-ios-bookmarks button-positive no-rad" href="#tab/online/{{maglist.folderName}}/{{maglist.index}}/{{maglist.magazineId}}">Go to Issue</a>
+      <a ng-if="maglist.progress === 100" class="button icon-left ion-ios-bookmarks button-positive no-rad" href="#tab/offline/{{maglist.folderName}}/{{maglist.index}}/{{maglist.magazineId}}">Read Now</a>
+      <a ng-if="maglist.progress === 0" class="button icon-left ion-ios-bookmarks button-positive no-rad" href="#tab/online/{{maglist.folderName}}/{{maglist.index}}/{{maglist.magazineId}}">Read Now</a>
       <button ng-if="maglist.progress === 0" id="btn-{{maglist.folderName}}" class="button icon-left ion-arrow-down-a button-stable no-rad" ng-click="downloadContent(maglist.folderName, maglist.zipFile, maglist.magazineId, maglist.issueName, maglist.index)">Download</button>
       </center>
     </div>
