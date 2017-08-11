@@ -139,8 +139,8 @@ angular.module('starter.controllers', ['ionic', 'ui.router', 'ngSanitize'])
               });
             var coverImage = thing.issueCover.substring(thing.issueCover.lastIndexOf('/') + 1);
             //Balikin tar
-            thing.coverPath = cordova.file.cacheDirectory + "contents/covers/" + coverImage;
-            // thing.coverPath = 'http://www.magazinedesigning.com/wp-content/uploads/2014/02/magazine-cover-tips-Blender.jpg';
+            // thing.coverPath = cordova.file.cacheDirectory + "contents/covers/" + coverImage;
+            thing.coverPath = 'http://www.magazinedesigning.com/wp-content/uploads/2014/02/magazine-cover-tips-Blender.jpg';
             promiseDownload.push($cordovaFileTransfer.download(thing.issueCover, thing.coverPath, {}, true));
             thing.index = idx;
             return thing;
